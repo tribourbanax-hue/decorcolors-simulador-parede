@@ -1,0 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+fastapi
+uvicorn[standard]
+python-multipart
+pillow
+numpy
+opencv-python-headless
+timm
+git+https://github.com/ChaoningZhang/MobileSAM.git
