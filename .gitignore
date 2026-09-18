@@ -1,6 +1,13 @@
 __pycache__/
 *.pyc
-models/
+/models/
 server.log
+static_server.log
+proto_server.log
+*.bak-*
 .venv/
 venv/
+
+# o modelo de segmentação client-side É versionado (deploy estático depende dele)
+!static/models/
+!static/models/*.tflite

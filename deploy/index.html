@@ -1,0 +1,1559 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de Parede — Decor Colors São Dimas | SJC</title>
+<meta name="description" content="Envie a foto do seu ambiente, toque na parede e veja qualquer uma das 1.001 cores do catálogo tintométrico Decor Colors aplicada na sua própria foto.">
+<meta name="theme-color" content="#111113">
+<link rel="canonical" href="https://simulador.decorcolorssjc.com.br/">
+<link rel="icon" href="/static/brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/brand/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/brand/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/brand/apple-touch-icon.png">
+<meta property="og:title" content="Simulador de Parede — Decor Colors São Dimas">
+<meta property="og:description" content="Veja a cor na sua parede antes de comprar a tinta. 1.001 cores do catálogo tintométrico, grátis e sem cadastro.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://simulador.decorcolorssjc.com.br/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1033624198703952');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17763891670"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17763891670');
+  gtag('config', 'G-CFT6K8BW11');
+</script>
+<style>
+  /* Sistema de design Decor Colors São Dimas — grafite · dourado fosco (mesmo do site no ar). */
+  :root{
+    --bg:#111113; --surface:#1e1e22; --surface-2:#26262b;
+    --border:rgba(255,255,255,.09); --border-soft:rgba(255,255,255,.05);
+    --ink:#f2eee5; --ink-soft:#c9c7c1; --ink-faint:#9a978f;
+    --accent:#c2a36b; --accent-ink:#111113; --accent-soft:rgba(194,163,107,.12);
+    --good:#25D366; --bad:#e0705a;
+    --graphite:#17171a; --gold-line:rgba(194,163,107,.38);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -20px rgba(0,0,0,.9);
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--ink-soft); font-family:'Inter',system-ui,sans-serif; margin:0; padding:0 0 48px;}
+  h1,h2,h3{font-family:'Sora','Inter',sans-serif; margin:0;}
+  .mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;}
+  ::selection{background:var(--accent); color:var(--accent-ink);}
+  [hidden]{display:none!important;}
+
+  .sim-topbar{background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:40;}
+  .sim-topbar .in{max-width:1180px; margin:0 auto; padding:0 clamp(16px,4vw,40px); height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .sim-brand{display:flex; align-items:center; gap:12px; text-decoration:none;}
+  .sim-brand img{height:26px; width:auto; display:block;}
+  .sim-brand span{font-family:'Sora',sans-serif; font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); border-left:1px solid var(--gold-line); padding-left:11px; white-space:nowrap;}
+  @media (max-width:400px){ .sim-brand span{display:none;} }
+  .sim-topbar .links{display:flex; align-items:center; gap:8px;}
+  .sim-wapp{display:inline-flex; align-items:center; gap:8px; background:var(--good); color:#0c2a17; font-family:'Sora',sans-serif; font-size:13px; font-weight:600; padding:9px 15px; border-radius:8px; text-decoration:none;}
+  .sim-wapp:hover{filter:brightness(1.06);}
+  .sim-wapp svg{width:16px; height:16px; fill:#0c2a17;}
+
+  header{max-width:1180px; margin:0 auto 20px; padding:26px clamp(16px,4vw,40px) 0;}
+  header .eyebrow{font-family:'Sora',sans-serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:600;}
+  header h1{font-size:30px; font-weight:800; margin-top:8px; letter-spacing:-.6px; color:var(--ink);}
+  header p{color:var(--ink-faint); font-size:14.5px; max-width:70ch; margin-top:8px; line-height:1.58;}
+  .app{max-width:1180px; margin:0 auto; padding:0 clamp(16px,4vw,40px); display:grid; grid-template-columns:1fr 380px; gap:20px; align-items:start;}
+  @media (max-width:940px){.app{grid-template-columns:1fr;}}
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); padding:16px;}
+
+  .dropzone{border:2px dashed var(--border); border-radius:12px; padding:16px; text-align:center; cursor:pointer;
+    color:var(--ink-soft); font-size:13.5px; background:var(--surface-2); margin-bottom:14px;}
+  .dropzone.drag{border-color:var(--accent); color:var(--accent);}
+  .dropzone strong{color:var(--ink); font-size:14.5px; margin-right:6px;}
+
+  .stage{position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--border-soft); background:var(--surface-2); touch-action:none;}
+  .stage canvas, .stage svg{width:100%; display:block;}
+  .stage canvas{cursor:crosshair;}
+  .stage canvas.is-hidden, .stage svg.is-hidden{display:none;}
+  .brush-ring{position:absolute; left:0; top:0; border:1.5px solid rgba(255,255,255,.95);
+    box-shadow:0 0 0 1.5px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.35);
+    border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); z-index:6; display:none;}
+  .brush-ring.on{display:block;}
+  .sample-badge{position:absolute; top:10px; left:10px; z-index:2; background:rgba(17,17,19,.78); color:var(--ink);
+    font-size:11px; font-weight:500; padding:5px 10px; border-radius:999px; letter-spacing:.02em; pointer-events:none;}
+  .sample-badge.is-hidden{display:none;}
+
+  /* Overlay de carregamento sobre a cena */
+  .stage-spin{position:absolute; inset:0; z-index:5; display:none; align-items:center; justify-content:center;
+    background:rgba(17,17,19,.55); backdrop-filter:blur(1px);}
+  .stage-spin.on{display:flex;}
+  .stage-spin .ring{width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,.18); border-top-color:var(--accent); animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* Alça do antes/depois */
+  .wipe-handle{position:absolute; top:0; bottom:0; width:2px; background:var(--accent); z-index:4; display:none; cursor:ew-resize;}
+  .wipe-handle.on{display:block;}
+  .wipe-handle::after{content:"‹ ›"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:var(--accent); color:var(--accent-ink); font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 7px; border-radius:999px; white-space:nowrap;}
+  .wipe-tag{position:absolute; top:10px; z-index:4; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    background:rgba(17,17,19,.72); color:var(--ink); padding:4px 8px; border-radius:999px; pointer-events:none; display:none;}
+  .wipe-tag.on{display:block;}
+  #wipeTagBefore{left:10px;} #wipeTagAfter{right:10px;}
+
+  .toolbar{display:flex; align-items:center; gap:8px; margin-top:12px; flex-wrap:wrap;}
+  .toolbar.is-hidden{display:none;}
+  .btn{border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-family:inherit;
+    font-size:12.5px; font-weight:500; padding:8px 12px; border-radius:8px; cursor:pointer;}
+  .btn:hover{border-color:var(--ink-faint);}
+  .btn:disabled{opacity:.4; cursor:not-allowed;}
+  .seg{display:inline-flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .seg button{border:0; background:var(--surface-2); color:var(--ink-soft); font-family:inherit; font-size:12.5px; font-weight:500; padding:8px 12px; cursor:pointer;}
+  .seg button+button{border-left:1px solid var(--border);}
+  .seg button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink);}
+  .toggle{display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink-soft); cursor:pointer; user-select:none;}
+  .tool-opt{display:flex; align-items:center; gap:7px; font-size:12px; color:var(--ink-faint); flex-wrap:wrap;}
+  .tool-opt input[type=range]{width:96px; accent-color:var(--accent);}
+  .tool-opt .val{color:var(--ink-soft); min-width:22px; text-align:right;}
+
+  /* Áreas (parede A cor X, parede B cor Y) */
+  .area-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; align-items:center;}
+  .area-row.is-hidden{display:none;}
+  .area-row .lbl{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); font-weight:600; margin-right:2px;}
+  .area-chip{border:1px solid var(--border); background:var(--surface-2); color:var(--ink-soft); font-size:12px; font-weight:500;
+    padding:5px 9px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:6px; font-family:inherit;}
+  .area-chip .dot{width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,.25);}
+  .area-chip[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .area-chip[aria-pressed="true"] .dot{border-color:rgba(0,0,0,.3);}
+  .area-chip .x{border:0; background:transparent; color:inherit; cursor:pointer; font-size:14px; line-height:1; padding:0 0 0 2px; opacity:.65;}
+  .area-chip .x:hover{opacity:1;}
+  .area-add{border:1px dashed var(--border); background:transparent; color:var(--ink-soft); font-size:12px; font-weight:500;
+    padding:5px 11px; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .area-add:hover{border-color:var(--accent); color:var(--accent);}
+
+  .tune{margin-top:12px; border-top:1px solid var(--border-soft); padding-top:12px; display:none; gap:14px; flex-wrap:wrap;}
+  .tune.on{display:flex;}
+  .tune .field{display:flex; flex-direction:column; gap:5px; font-size:11.5px; color:var(--ink-faint); min-width:150px; flex:1;}
+  .tune .field .val{color:var(--ink-soft);}
+  .tune input[type=range]{width:100%; accent-color:var(--accent);}
+  .tune select{background:var(--surface-2); color:var(--ink); border:1px solid var(--border); border-radius:7px; padding:6px 8px; font-family:inherit; font-size:12.5px;}
+
+  .stage-actions{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
+  .stage-actions.is-hidden{display:none;}
+  .stage-actions .btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent); font-weight:600;}
+  .stage-actions .btn.primary:hover{filter:brightness(1.06);}
+
+  .status{font-size:13px; color:var(--ink-soft); margin-top:10px; min-height:18px;}
+  .status.busy::before{content:"⏳ ";}
+  .status.ok::before{content:"✓ "; color:var(--good);}
+  .status.err{color:var(--bad);}
+
+  .fan h2{font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); font-weight:600; margin-bottom:10px;}
+  .search{position:relative; display:block;}
+  .search input{width:100%; padding:9px 30px 9px 10px; border-radius:8px; border:1px solid var(--border); background:var(--surface-2);
+    color:var(--ink); font-size:13.5px; font-family:inherit; margin-bottom:10px;}
+  .search .clear{position:absolute; right:8px; top:8px; width:20px; height:20px; border:0; border-radius:50%; cursor:pointer;
+    background:var(--border); color:var(--ink); font-size:13px; line-height:1; display:none;}
+  .search .clear.on{display:block;}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;}
+  .chip-btn{border:1px solid var(--border); background:var(--surface-2); color:var(--ink-soft); font-size:11.5px; font-weight:500;
+    padding:5px 9px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:5px; font-family:inherit;}
+  .chip-btn .dot{width:8px; height:8px; border-radius:50%; border:1px solid rgba(0,0,0,.25);}
+  .chip-btn[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .chip-sep{width:1px; align-self:stretch; background:var(--border); margin:2px 3px;}
+
+  .count{font-size:11.5px; color:var(--ink-faint); margin-bottom:6px;}
+  .swatch-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; max-height:360px; overflow-y:auto; overflow-x:hidden; padding-right:4px; margin-right:-4px;}
+  .swatch{min-width:0; max-width:100%; border:1px solid var(--border); background:var(--surface-2); border-radius:9px; padding:5px; cursor:pointer; text-align:left; font-family:inherit; position:relative;}
+  .swatch:hover{border-color:var(--ink-faint);}
+  .swatch .chip{width:100%; aspect-ratio:1.3; border-radius:5px; border:1px solid rgba(0,0,0,.18); display:block;}
+  .swatch .label{font-size:9.5px; margin-top:5px; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink);}
+  .swatch .code{font-size:8.5px; color:var(--ink-faint); display:block;}
+  .swatch[data-active="true"]{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .swatch .fav{position:absolute; top:3px; right:3px; width:18px; height:18px; border:0; background:rgba(17,17,19,.55); color:var(--ink-faint);
+    border-radius:50%; font-size:11px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;}
+  .swatch .fav.on{color:var(--accent);}
+
+  /* Comparação A/B/C */
+  .compare{margin-top:12px; border-top:1px solid var(--border-soft); padding-top:12px;}
+  .compare h3{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); font-weight:600; margin-bottom:8px;}
+  .slots{display:flex; gap:6px;}
+  .slot{flex:1; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); padding:6px; cursor:pointer; text-align:left; font-family:inherit; min-width:0;}
+  .slot[aria-pressed="true"]{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .slot .k{font-size:10px; font-weight:700; color:var(--ink-faint); font-family:'Sora',sans-serif;}
+  .slot .sw{width:100%; height:22px; border-radius:4px; margin:4px 0; border:1px solid rgba(0,0,0,.2); background:var(--surface);}
+  .slot .nm{font-size:9px; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .compare .row2{display:flex; gap:8px; margin-top:8px; align-items:center; flex-wrap:wrap;}
+
+  .selected-bar{display:flex; align-items:center; gap:10px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-soft);}
+  .selected-bar .chip{width:34px; height:34px; border-radius:7px; border:1px solid rgba(0,0,0,.25); flex:none;}
+  .selected-bar .txt{font-size:12.5px; line-height:1.35; min-width:0;}
+  .selected-bar .txt .name{font-weight:600; color:var(--ink);}
+  .selected-bar .txt .meta{color:var(--ink-faint);}
+  .selected-bar .copy{margin-left:auto; flex:none;}
+
+  /* ---- Projeto do ambiente / vídeo tour ---- */
+  .project{max-width:1180px; margin:26px auto 0; padding:20px clamp(16px,4vw,40px) 0; border-top:1px solid var(--border);}
+  .proj-head h2{font-size:16px; font-weight:700; color:var(--ink); font-family:'Sora',sans-serif;}
+  .proj-head h2 span{color:var(--accent); font-weight:600; font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-left:6px;}
+  .proj-head p{font-size:13px; color:var(--ink-faint); margin-top:6px; line-height:1.55;}
+  .proj-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; margin-top:14px;}
+  .wall-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;}
+  .wall-card .thumb{width:100%; aspect-ratio:1; object-fit:cover; display:block; background:var(--surface-2);}
+  .wall-card .body{padding:9px 10px; display:flex; flex-direction:column; gap:6px;}
+  .wall-card input.nm{border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-family:inherit; font-size:12.5px; font-weight:600; border-radius:6px; padding:5px 7px;}
+  .wall-card .col{display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--ink-soft);}
+  .wall-card .col .sw{width:16px; height:16px; border-radius:4px; border:1px solid rgba(0,0,0,.25); flex:none;}
+  .wall-card .row{display:flex; gap:4px;}
+  .wall-card .row button{flex:1; border:1px solid var(--border); background:var(--surface-2); color:var(--ink-soft); font-family:inherit; font-size:12px; padding:5px 0; border-radius:6px; cursor:pointer;}
+  .wall-card .row button:hover{border-color:var(--ink-faint); color:var(--ink);}
+  .wall-card .row button.del:hover{color:var(--bad); border-color:var(--bad);}
+  .proj-empty{margin-top:12px; font-size:12.5px; color:var(--ink-faint); background:var(--surface-2); border:1px dashed var(--border); border-radius:10px; padding:12px 14px; line-height:1.55;}
+  .proj-bar{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:14px;}
+  .proj-sec{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-faint);}
+  .proj-sec input[type=range]{width:110px; accent-color:var(--accent);}
+  .proj-progress{margin-top:14px; display:flex; align-items:center; gap:12px;}
+  .proj-progress .track{flex:1; height:6px; background:var(--surface-2); border:1px solid var(--border); border-radius:999px; overflow:hidden;}
+  .proj-progress .track i{display:block; height:100%; width:0; background:var(--accent); transition:width .15s linear;}
+  .proj-progress span{font-size:12px; color:var(--ink-faint); white-space:nowrap;}
+  .proj-out{margin-top:16px; display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
+  .proj-out video{width:340px; max-width:100%; border-radius:12px; border:1px solid var(--border); background:#000;}
+  .proj-out-actions{display:flex; flex-direction:column; gap:8px;}
+  .proj-out-note{font-size:11.5px; color:var(--ink-faint); max-width:34ch; line-height:1.5;}
+
+  .sim-cta{max-width:1180px; margin:26px auto 0; padding:0 clamp(16px,4vw,40px);}
+  .sim-cta .box{background:var(--accent-soft); border:1px solid var(--gold-line); border-radius:14px; padding:24px 26px; display:flex; gap:22px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+  .sim-cta h2{font-size:19px; font-weight:700; color:var(--accent); margin-bottom:6px;}
+  .sim-cta p{font-size:14px; color:var(--ink-soft); line-height:1.58; max-width:62ch; margin:0;}
+
+  footer{max-width:1180px; margin:26px auto 0; padding:22px clamp(16px,4vw,40px) 0; border-top:1px solid var(--border); font-size:12px; color:var(--ink-faint); line-height:1.7;}
+  footer a{color:var(--accent); text-decoration:none;}
+
+  /* --- extras da versão publicada --- */
+  .sim-back{font-family:'Sora',sans-serif; font-size:13px; font-weight:500; color:var(--ink-faint); text-decoration:none; padding:8px 12px; border-radius:8px;}
+  .sim-back:hover{color:var(--accent);}
+  @media (max-width:560px){ .sim-back{display:none;} }
+  .sim-cta .acts{display:flex; gap:10px; flex-wrap:wrap; flex:none;}
+  @media (max-width:640px){ .sim-cta .acts{width:100%;} .sim-cta .acts a{flex:1; justify-content:center;} }
+  footer a:hover{text-decoration:underline;}
+  footer .row{display:flex; gap:20px; justify-content:space-between; flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<nav class="sim-topbar">
+  <div class="in">
+    <a class="sim-brand" href="https://decorcolorssjc.com.br/" aria-label="Decor Colors São Dimas — início">
+      <img src="/static/brand/logo-decorcolors-branco.png" alt="Decor Colors">
+      <span>São Dimas · SJC</span>
+    </a>
+    <div class="links">
+      <a class="sim-back" href="https://decorcolorssjc.com.br/">← Voltar ao site</a>
+      <a class="sim-wapp" href="https://wa.me/551239435659?text=Ol%C3%A1%2C%20estou%20usando%20o%20simulador%20de%20parede%20e%20gostaria%20de%20orienta%C3%A7%C3%A3o%20t%C3%A9cnica." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.845L.057 23.492a.5.5 0 0 0 .606.64l5.857-1.533A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.04-1.377l-.361-.214-3.74.979.999-3.638-.235-.374A9.862 9.862 0 0 1 2.1 12C2.1 6.534 6.534 2.1 12 2.1c5.466 0 9.9 4.434 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<header>
+  <div class="eyebrow">Simulador de parede · Grátis, sem cadastro</div>
+  <h1>Veja a cor na sua parede antes de comprar a tinta</h1>
+  <p>Envie a foto do ambiente, toque na parede que quer pintar e escolha qualquer uma das 1.001 cores do catálogo tintométrico. A área da parede é identificada no seu próprio navegador — a foto não sai do seu aparelho — e a cor entra na imagem preservando a sombra e a luz reais.</p>
+</header>
+
+<div class="app">
+  <div class="panel">
+    <div class="dropzone" id="dropzone">
+      <strong id="dropzoneTitle">Clique para enviar sua foto</strong>
+      <span id="dropzoneSub">da sala, fachada, cozinha ou qualquer ambiente — ou arraste o arquivo aqui</span>
+      <input type="file" id="fileInput" accept="image/*" style="display:none">
+    </div>
+
+    <div class="stage" id="stage">
+      <span class="sample-badge" id="sampleBadge">Ambiente de exemplo — sem IA, só pra navegar cores</span>
+      <span class="wipe-tag" id="wipeTagBefore">Antes</span>
+      <span class="wipe-tag" id="wipeTagAfter">Depois</span>
+      <svg id="sampleSvg" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg">
+        <rect id="sample-wall" x="0" y="0" width="800" height="430" fill="#EFE7D9"/>
+        <rect x="0" y="424" width="800" height="10" fill="#FFFFFF" opacity="0.8"/>
+        <rect x="0" y="430" width="800" height="130" fill="#C9AE8C"/>
+        <line x1="0" y1="468" x2="800" y2="468" stroke="#B4966F" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="506" x2="800" y2="506" stroke="#B4966F" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="544" x2="800" y2="544" stroke="#B4966F" stroke-width="2" opacity="0.5"/>
+        <rect x="592" y="66" width="150" height="204" rx="4" fill="#BFE0EE" stroke="#5B5A54" stroke-width="6"/>
+        <line x1="667" y1="66" x2="667" y2="270" stroke="#5B5A54" stroke-width="5"/>
+        <line x1="592" y1="168" x2="742" y2="168" stroke="#5B5A54" stroke-width="5"/>
+        <rect x="566" y="58" width="28" height="216" fill="#EDE6D8" opacity="0.92"/>
+        <rect x="742" y="58" width="28" height="216" fill="#EDE6D8" opacity="0.92"/>
+        <rect x="88" y="108" width="126" height="92" fill="#FFFFFF" stroke="#5B5A54" stroke-width="6"/>
+        <line x1="104" y1="180" x2="150" y2="128" stroke="#A65B3E" stroke-width="4" stroke-linecap="round"/>
+        <line x1="140" y1="186" x2="198" y2="120" stroke="#4C7A52" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="300" cy="500" rx="220" ry="32" fill="#B99B78" opacity="0.5"/>
+        <g transform="translate(500,318)">
+          <rect x="-22" y="60" width="44" height="52" rx="4" fill="#A65B3E"/>
+          <circle cx="0" cy="18" r="34" fill="#4C7A52"/>
+          <circle cx="-25" cy="42" r="26" fill="#3E6644"/>
+          <circle cx="27" cy="40" r="24" fill="#5C8F5F"/>
+        </g>
+        <g transform="translate(56,326)">
+          <rect x="-14" y="30" width="18" height="112" rx="8" fill="#5F6E76"/>
+          <rect x="358" y="30" width="18" height="112" rx="8" fill="#5F6E76"/>
+          <rect x="0" y="42" width="360" height="98" rx="18" fill="#7C8B93"/>
+          <rect x="0" y="0" width="360" height="60" rx="18" fill="#8B99A1"/>
+          <rect x="20" y="18" width="150" height="56" rx="14" fill="#63727A"/>
+          <rect x="190" y="18" width="150" height="56" rx="14" fill="#63727A"/>
+          <rect x="10" y="128" width="26" height="30" fill="#4A3B2E"/>
+          <rect x="324" y="128" width="26" height="30" fill="#4A3B2E"/>
+        </g>
+      </svg>
+      <canvas id="canvas" class="is-hidden"></canvas>
+      <div class="brush-ring" id="brushRing"></div>
+      <div class="wipe-handle" id="wipeHandle"></div>
+      <div class="stage-spin" id="stageSpin"><div class="ring"></div></div>
+    </div>
+
+    <div class="toolbar is-hidden" id="toolbar">
+      <div class="seg" id="toolSeg">
+        <button type="button" data-tool="smart" aria-pressed="true">✨ Toque inteligente</button>
+        <button type="button" data-tool="wand">🪄 Varinha</button>
+        <button type="button" data-tool="brush">🖌️ Pincel</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="chkRemove"> Desmarcar / apagar</label>
+      <span class="tool-opt" id="optWand" hidden>Semelhança
+        <input type="range" id="rngTol" min="6" max="90" value="32"><span class="val" id="valTol">32</span>
+        <label class="toggle"><input type="checkbox" id="chkWandGlobal"> a foto toda</label>
+      </span>
+      <span class="tool-opt" id="optBrush" hidden>Tamanho
+        <input type="range" id="rngBrush" min="6" max="90" value="30"><span class="val" id="valBrush">30</span>
+      </span>
+      <button class="btn" id="btnUndo">Desfazer</button>
+      <button class="btn" id="btnClear">Limpar área</button>
+      <label class="toggle"><input type="checkbox" id="chkTune"> Ajuste fino</label>
+    </div>
+
+    <div class="area-row is-hidden" id="areaRow"></div>
+
+    <div class="tune" id="tune">
+      <label class="field">Cobertura da tinta <span class="val" id="valStrength">100%</span>
+        <input type="range" id="rngStrength" min="40" max="100" value="100">
+      </label>
+      <label class="field">Textura da parede <span class="val" id="valTexture">média</span>
+        <input type="range" id="rngTexture" min="0" max="100" value="70">
+      </label>
+      <label class="field">Suavizar borda <span class="val" id="valFeather">1 px</span>
+        <input type="range" id="rngFeather" min="0" max="6" value="1">
+      </label>
+      <label class="field">Acabamento
+        <select id="selFinish">
+          <option value="fosco">Fosco / acetinado</option>
+          <option value="semibrilho">Semibrilho</option>
+          <option value="alto">Alto brilho</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="stage-actions is-hidden" id="stageActions">
+      <button class="btn primary" id="btnDownloadImg" disabled>Baixar imagem (JPG)</button>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <aside class="panel fan">
+    <h2>Leque de cores</h2>
+    <label class="search">
+      <input id="search" type="text" placeholder="Buscar por nome ou código" autocomplete="off">
+      <button type="button" class="clear" id="searchClear" aria-label="Limpar busca">×</button>
+    </label>
+
+    <div class="chip-row" id="collectionRow"></div>
+    <div class="chip-row" id="hueRow"></div>
+    <div class="count" id="count"></div>
+    <div class="swatch-grid" id="swatchGrid"></div>
+
+    <div class="compare">
+      <h3>Comparar cores</h3>
+      <div class="slots" id="slots"></div>
+      <div class="row2">
+        <button class="btn" id="btnAddSlot">+ Guardar cor atual</button>
+        <button class="btn" id="btnBeforeAfter" disabled>Antes / depois</button>
+      </div>
+    </div>
+
+    <div class="selected-bar">
+      <div class="chip" id="infoChip" style="background:#333"></div>
+      <div class="txt">
+        <div class="name" id="infoName">Nenhuma cor aplicada</div>
+        <div class="meta mono" id="infoMeta">Escolha uma cor no leque</div>
+      </div>
+      <button class="btn copy" id="btnCopy" disabled>Copiar</button>
+    </div>
+  </aside>
+</div>
+
+<section class="project" id="projectPanel">
+  <div class="proj-head">
+    <h2>Projeto do ambiente <span>→ vídeo tour</span></h2>
+    <p>Junte até <b>4 paredes</b> do mesmo cômodo (uma foto cada), cada uma com a sua cor. No fim, gera um vídeo quadrado passeando por elas.</p>
+  </div>
+
+  <div class="proj-grid" id="projGrid"></div>
+
+  <div class="proj-empty" id="projEmpty">
+    Pinte a parede acima (foto + toque + cor) e clique em <b>“Adicionar ao projeto”</b>. Repita trocando a foto pela próxima parede.
+  </div>
+
+  <div class="proj-bar">
+    <button class="btn primary" id="btnAddWall" disabled>+ Adicionar parede atual ao projeto</button>
+    <label class="proj-sec">Tempo por parede
+      <input type="range" id="rngPerWall" min="2" max="6" step="1" value="4">
+      <span id="valPerWall">4s</span>
+    </label>
+    <button class="btn" id="btnMakeVideo" disabled>🎬 Gerar vídeo (1:1)</button>
+  </div>
+
+  <div class="proj-progress" id="projProgress" hidden>
+    <div class="track"><i id="projBar"></i></div>
+    <span id="projProgTxt">Preparando…</span>
+  </div>
+
+  <div class="proj-out" id="projOut" hidden>
+    <video id="projVideo" controls loop playsinline muted></video>
+    <div class="proj-out-actions">
+      <a class="btn primary" id="projDownload" download="simulacao-decorcolors.webm">Baixar vídeo</a>
+      <span class="proj-out-note" id="projOutNote"></span>
+    </div>
+  </div>
+</section>
+
+<section class="sim-cta">
+  <div class="box">
+    <div>
+      <h2>Achou a cor? A gente prepara ela na loja.</h2>
+      <p>Anote o nome e o código da cor. No showroom preparamos exatamente esse tom no sistema tintométrico e indicamos a linha de tinta certa pra sua superfície — interna, externa, área úmida ou piso. A tela é uma referência muito boa, mas a confirmação final é sempre na amostra física.</p>
+    </div>
+    <div class="acts">
+      <a class="sim-wapp" href="https://wa.me/551239435659?text=Ol%C3%A1%2C%20escolhi%20uma%20cor%20no%20simulador%20de%20parede%20e%20queria%20orienta%C3%A7%C3%A3o%20sobre%20a%20tinta%20certa%20e%20a%20quantidade." target="_blank" rel="noopener" data-sim-lead="cta">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.845L.057 23.492a.5.5 0 0 0 .606.64l5.857-1.533A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.04-1.377l-.361-.214-3.74.979.999-3.638-.235-.374A9.862 9.862 0 0 1 2.1 12C2.1 6.534 6.534 2.1 12 2.1c5.466 0 9.9 4.434 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/></svg>
+        Falar com a equipe
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="row">
+    <div>
+      <strong style="color:var(--ink);">Decor Colors São José dos Campos — São Dimas</strong><br>
+      Rua Paraibuna, 304 — Jardim São Dimas, São José dos Campos/SP<br>
+      <a href="tel:+551239435659">(12) 3943-5659</a> · <a href="https://decorcolorssjc.com.br/">decorcolorssjc.com.br</a>
+    </div>
+    <div style="text-align:right;">
+      A segmentação roda no seu navegador (MediaPipe, Google — open source).<br>Sua foto não é enviada a servidor nenhum.
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Marca o lead que sai do simulador pro WhatsApp — mesmo evento do site. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+    if (!a) return;
+    if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', { send_to: 'AW-17763891670/xJGVCLySjsYcENbzvZZC' });
+    }
+  });
+</script>
+
+<script>
+/* ============================================================================
+   PROTÓTIPO v6 — segmentação 100% no navegador (sem servidor Python).
+   - Toque inteligente: MediaPipe Interactive Image Segmenter (magic_touch.tflite).
+   - Varinha mágica: flood fill por semelhança de cor (canvas puro, offline).
+   - Pincel: adicionar / apagar à mão (canvas puro, offline).
+   - Várias áreas na mesma foto: parede A cor X, parede B cor Y...
+   - Recolor: relighting em luz linear (preserva sombra/textura).
+   - Projeto do ambiente -> vídeo tour Ken Burns 1:1 (MediaRecorder no navegador).
+   >>> COLLECTIONS abaixo está com exemplos gerados do catálogo. Trocar pela
+       lista oficial da Decor Colors (nome da coleção -> lista de códigos).
+   ========================================================================== */
+
+const MP_VER = '1.0.1';
+const MP_ESM = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/vision_bundle.mjs`;
+const MP_WASM = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/wasm`;
+const MP_MODEL = '/static/models/magic_touch.tflite';
+
+const HUE_BUCKETS = ['Todas','Amarelos','Laranjas','Vermelhos e Rosas','Roxos','Azuis','Verdes','Beges e Marrons','Branco e Cinzas'];
+const BUCKET_SAMPLE = {
+  'Todas':'#c2a36b','Amarelos':'#E8C84A','Laranjas':'#E08A3C','Vermelhos e Rosas':'#C1456B',
+  'Roxos':'#7A5A9A','Azuis':'#3E7CA6','Verdes':'#4F8A5B','Beges e Marrons':'#9C7A52','Branco e Cinzas':'#B9B7AE'
+};
+
+/* Coleções oficiais entram aqui como { "Nome": ["2904P","2953P", ...] }.
+   Enquanto a lista real não chega, as coleções abaixo são geradas por regra
+   a partir do próprio catálogo, só pra demonstrar o mecanismo. */
+const COLLECTIONS = {};
+const DYNAMIC_COLLECTIONS = {
+  'Neutros quentes': (h,s,l) => l>0.55 && s<0.30 && (h>=20 && h<70),
+  'Verdes serenos':  (h,s,l) => h>=90 && h<170 && s>=0.06 && l>0.45,
+  'Azuis profundos': (h,s,l) => h>=185 && h<250 && l<0.55,
+  'Terrosos':        (h,s,l) => (h<40 || h>=350) && s>=0.15 && l<0.6,
+};
+
+/* CORES PRONTAS — tons de fábrica das linhas prontas Decor Colors. NÃO fazem
+   parte do catálogo tintométrico de 1.001 (que é preparado na loja); estas já
+   vêm no balde. hex medido dos arquivos oficiais de cor.
+   'line' preenchido só quando a cor é exclusiva de uma linha. */
+const READY_KEY = '__prontas__';
+const READY_COLORS = [
+  { name:'Preto',    hex:'#1C1C1C', line:null },
+  { name:'Telha',    hex:'#BF4F2F', line:'Borracha Líquida' },
+  { name:'Zeus',     hex:'#9B9FAB', line:null },
+  { name:'Poseidon', hex:'#6B6B76', line:null },
+  { name:'Cronos',   hex:'#CDCAC7', line:null },
+  { name:'Atena',    hex:'#F4F0EB', line:null },
+];
+
+const $ = (s,r=document) => r.querySelector(s);
+const dropzone=$('#dropzone'), fileInput=$('#fileInput'), stage=$('#stage'), canvas=$('#canvas');
+const sampleSvg=$('#sampleSvg'), sampleWall=$('#sample-wall'), ctx=canvas.getContext('2d', {willReadFrequently:true});
+const toolbar=$('#toolbar'), statusEl=$('#status'), stageSpin=$('#stageSpin');
+const dropzoneTitle=$('#dropzoneTitle'), dropzoneSub=$('#dropzoneSub'), sampleBadge=$('#sampleBadge');
+const collectionRow=$('#collectionRow'), hueRow=$('#hueRow'), swatchGrid=$('#swatchGrid'), countEl=$('#count');
+const searchInput=$('#search'), searchClear=$('#searchClear');
+const infoChip=$('#infoChip'), infoName=$('#infoName'), infoMeta=$('#infoMeta'), btnCopy=$('#btnCopy');
+const slotsEl=$('#slots'), btnAddSlot=$('#btnAddSlot'), btnBeforeAfter=$('#btnBeforeAfter');
+const wipeHandle=$('#wipeHandle'), wipeTagBefore=$('#wipeTagBefore'), wipeTagAfter=$('#wipeTagAfter');
+const areaRow=$('#areaRow'), toolSeg=$('#toolSeg'), optWand=$('#optWand'), optBrush=$('#optBrush');
+const brushRing=$('#brushRing');
+const stageActions=$('#stageActions'), btnDownloadImg=$('#btnDownloadImg');
+
+let PALETTE = [];               // [name, code, hex]
+const byCode = new Map();
+let FAVS = loadFavs();
+const MAX_AREAS = 8;
+
+const state = {
+  hue:'Todas', collection:null, query:'',
+  mode:'sample',                // 'sample' | 'photo'
+  baseCanvas:null, baseData:null, w:0, h:0,
+  tool:'smart', eraseMode:false,
+  wandTolerance:32, wandGlobal:false, brushSize:30,
+  areas:[], activeArea:0,
+  sampleColor:null,
+  strength:1.0, texture:0.70, feather:1, finish:'fosco',
+  showMask:true,
+  slots:[null,null,null], activeSlot:0,
+  wipe:1,                       // 1 = tudo pintado; <1 mostra "antes" à esquerda
+  paintedCache:null, cacheKey:'',
+  _rendering:false,
+};
+
+/* Projeto do ambiente: várias paredes (1 foto cada), pra virar um vídeo tour. */
+const project = { walls:[], secPerWall:4, videoUrl:null };
+
+function setStatus(t,k){ statusEl.textContent=t; statusEl.className='status'+(k?(' '+k):''); }
+function spin(on){ stageSpin.classList.toggle('on', !!on); }
+
+/* ---------- cor: helpers ---------- */
+function hexToRgb(hex){ return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)]; }
+function hexToHsl(hex){
+  const [r0,g0,b0]=hexToRgb(hex), r=r0/255,g=g0/255,b=b0/255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b); let h=0,s=0; const l=(max+min)/2;
+  if(max!==min){ const d=max-min; s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){ case r:h=(g-b)/d+(g<b?6:0);break; case g:h=(b-r)/d+2;break; case b:h=(r-g)/d+4;break; } h*=60; }
+  return {h,s,l};
+}
+function bucketOf(hex){
+  const {h,s,l}=hexToHsl(hex);
+  if(s<0.11) return 'Branco e Cinzas';
+  if(s<0.38 && h>=20 && h<50 && l<0.72) return 'Beges e Marrons';
+  if(h<20 || h>=345) return 'Vermelhos e Rosas';
+  if(h<45) return 'Laranjas';
+  if(h<70) return 'Amarelos';
+  if(h<170) return 'Verdes';
+  if(h<255) return 'Azuis';
+  if(h<300) return 'Roxos';
+  return 'Vermelhos e Rosas';
+}
+
+/* LUTs sRGB <-> linear (gamma) pra relighting fisicamente mais correto */
+const S2L = new Float32Array(256);
+for(let i=0;i<256;i++){ const c=i/255; S2L[i]= c<=0.04045 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+const L2S_N = 4096, L2S = new Uint8ClampedArray(L2S_N+1);
+for(let i=0;i<=L2S_N;i++){ const c=i/L2S_N; const v = c<=0.0031308 ? c*12.92 : 1.055*Math.pow(c,1/2.4)-0.055; L2S[i]=Math.round(v*255); }
+const lin2byte = v => L2S[ v<=0?0 : v>=1?L2S_N : (v*L2S_N)|0 ];
+
+/* ---------- carregar paleta ---------- */
+fetch('/static/palette.json').then(r=>r.json()).then(data=>{
+  const seen=new Set();
+  PALETTE = data.filter(d=>{ if(seen.has(d.code))return false; seen.add(d.code); return true; })
+                .map(d=>[d.name, d.code, d.hex]);
+  PALETTE.forEach(c=>byCode.set(c[1], c));
+  if(Object.keys(COLLECTIONS).length===0){
+    for(const [nm,test] of Object.entries(DYNAMIC_COLLECTIONS)){
+      const codes = PALETTE.filter(([n,code,hex])=>{ const {h,s,l}=hexToHsl(hex); return test(h,s,l); })
+                           .slice(0,60).map(x=>x[1]);
+      if(codes.length>=6) COLLECTIONS[nm]=codes;
+    }
+  }
+  buildCollectionRow(); buildHueRow(); buildSlots(); renderGrid();
+});
+
+/* ---------- MediaPipe (lazy) ---------- */
+let _seg=null, _segPromise=null;
+function getSegmenter(){
+  if(_seg) return Promise.resolve(_seg);
+  if(_segPromise) return _segPromise;
+  _segPromise = (async ()=>{
+    const V = await import(MP_ESM);
+    const fileset = await V.FilesetResolver.forVisionTasks(MP_WASM);
+    // tasks-vision 1.0.x: a classe "Legacy" é a que roda os modelos .tflite
+    // clássicos (magic_touch). A InteractiveSegmenter nova exige um bundle .task
+    // que o Google ainda não publicou pro magic_touch.
+    const Cls = V.InteractiveSegmenterLegacy || V.InteractiveSegmenter;
+    _seg = await Cls.createFromOptions(fileset, {
+      baseOptions:{ modelAssetPath: MP_MODEL },
+      outputCategoryMask:true, outputConfidenceMasks:false,
+    });
+    return _seg;
+  })();
+  _segPromise.catch(()=>{ _segPromise=null; });
+  return _segPromise;
+}
+
+/* ---------- Coleções ---------- */
+function buildCollectionRow(){
+  collectionRow.innerHTML='';
+  const mk=(label,val,dot)=>{
+    const b=document.createElement('button'); b.className='chip-btn'; b.type='button';
+    b.setAttribute('aria-pressed', String(state.collection===val));
+    b.innerHTML = (dot?`<span class="dot" style="background:${dot}"></span>`:'') + label;
+    b.addEventListener('click', ()=>{ state.collection = (state.collection===val?null:val); buildCollectionRow(); renderGrid(); });
+    return b;
+  };
+  collectionRow.appendChild(mk(`◆ Cores prontas (${READY_COLORS.length})`, READY_KEY, 'var(--accent)'));
+  collectionRow.appendChild(mk(`★ Favoritas (${FAVS.size})`, '__favs__', 'var(--accent)'));
+  if(Object.keys(COLLECTIONS).length){
+    const sep=document.createElement('span'); sep.className='chip-sep'; collectionRow.appendChild(sep);
+  }
+  for(const nm of Object.keys(COLLECTIONS)) collectionRow.appendChild(mk(nm, nm, null));
+}
+
+/* ---------- Matiz ---------- */
+function buildHueRow(){
+  hueRow.innerHTML='';
+  for(const bk of HUE_BUCKETS){
+    const b=document.createElement('button'); b.className='chip-btn'; b.type='button';
+    b.setAttribute('aria-pressed', String(bk===state.hue));
+    b.innerHTML=`<span class="dot" style="background:${BUCKET_SAMPLE[bk]}"></span>${bk}`;
+    b.addEventListener('click', ()=>{ state.hue=bk; buildHueRow(); renderGrid(); });
+    hueRow.appendChild(b);
+  }
+}
+
+function activeCollectionCodes(){
+  if(state.collection==='__favs__') return FAVS;
+  if(state.collection && COLLECTIONS[state.collection]) return new Set(COLLECTIONS[state.collection]);
+  return null;
+}
+
+function filteredPalette(){
+  const q=state.query.trim().toLowerCase();
+  const cc=activeCollectionCodes();
+  return PALETTE.filter(([name,code,hex])=>{
+    if(cc && !cc.has(code)) return false;
+    if(state.hue!=='Todas' && bucketOf(hex)!==state.hue) return false;
+    if(q && !(name.toLowerCase().includes(q) || code.toLowerCase().includes(q))) return false;
+    return true;
+  });
+}
+
+function currentColor(){
+  if(state.mode==='sample') return state.sampleColor;
+  const a=activeArea(); if(!a) return null;
+  return a.color;
+}
+
+function renderGrid(){
+  if(state.collection===READY_KEY) return renderReadyGrid();
+  const list=filteredPalette();
+  const cur=currentColor();
+  countEl.textContent = `${list.length} cor${list.length===1?'':'es'}` + (state.collection?' · coleção':'');
+  swatchGrid.innerHTML='';
+  const frag=document.createDocumentFragment();
+  for(const [name,code,hex] of list){
+    const b=document.createElement('button'); b.className='swatch'; b.type='button'; b.dataset.code=code;
+    b.dataset.active=String(cur && cur.code===code);
+    b.innerHTML =
+      `<span class="chip" style="background:${hex}"></span>`+
+      `<span class="label">${name}</span><span class="code mono">${code}</span>`+
+      `<button class="fav ${FAVS.has(code)?'on':''}" title="Favoritar" data-fav="${code}">★</button>`;
+    b.title=`${name} · ${code} · ${hex}`;
+    b.addEventListener('click', e=>{
+      if(e.target.dataset.fav){ toggleFav(code); e.stopPropagation(); return; }
+      applyColor(name,code,hex);
+    });
+    frag.appendChild(b);
+  }
+  swatchGrid.appendChild(frag);
+}
+
+/* ---------- Cores prontas (linhas de fábrica) ---------- */
+function renderReadyGrid(){
+  const q=state.query.trim().toLowerCase();
+  const cur=currentColor();
+  const list=READY_COLORS.filter(c=> !q || c.name.toLowerCase().includes(q) || (c.line||'').toLowerCase().includes(q));
+  countEl.textContent = `${list.length} cor${list.length===1?'':'es'} · linhas prontas (já no balde)`;
+  swatchGrid.innerHTML='';
+  const frag=document.createDocumentFragment();
+  for(const c of list){
+    const meta = c.line ? `Só na linha ${c.line}` : 'Linha pronta';
+    const b=document.createElement('button'); b.className='swatch'; b.type='button'; b.dataset.code=c.name;
+    b.dataset.active=String(cur && cur.code===c.name);
+    b.innerHTML =
+      `<span class="chip" style="background:${c.hex}"></span>`+
+      `<span class="label">${c.name}</span><span class="code mono">${meta}</span>`;
+    b.title=`${c.name} · ${meta} · ${c.hex}`;
+    b.addEventListener('click', ()=> applyColor(c.name, c.name, c.hex, meta));
+    frag.appendChild(b);
+  }
+  swatchGrid.appendChild(frag);
+}
+
+/* ---------- Favoritas ---------- */
+function loadFavs(){ try{ return new Set(JSON.parse(localStorage.getItem('dc_favs')||'[]')); }catch(_){ return new Set(); } }
+function saveFavs(){ try{ localStorage.setItem('dc_favs', JSON.stringify([...FAVS])); }catch(_){} }
+function toggleFav(code){
+  FAVS.has(code) ? FAVS.delete(code) : FAVS.add(code);
+  saveFavs(); buildCollectionRow(); renderGrid();
+}
+
+/* ---------- Busca ---------- */
+let searchT;
+searchInput.addEventListener('input', e=>{
+  const v=e.target.value; searchClear.classList.toggle('on', v.length>0);
+  clearTimeout(searchT); searchT=setTimeout(()=>{ state.query=v; renderGrid(); }, 120);
+});
+searchClear.addEventListener('click', ()=>{ searchInput.value=''; searchClear.classList.remove('on'); state.query=''; renderGrid(); searchInput.focus(); });
+
+/* ---------- áreas ---------- */
+function newArea(name){ return { name, mask:new Uint8ClampedArray(state.w*state.h), color:null, rev:0, _undo:[] }; }
+function activeArea(){ return state.areas[state.activeArea]; }
+function touch(a){ a.rev++; }
+function pushUndo(a){ a._undo.push(a.mask.slice()); if(a._undo.length>12) a._undo.shift(); }
+
+function maskCount(a){
+  if(a._count!=null && a._countRev===a.rev) return a._count;
+  let n=0; const m=a.mask; for(let i=0;i<m.length;i++) if(m[i]) n++;
+  a._count=n; a._countRev=a.rev; return n;
+}
+function anyPainted(){ return state.areas.some(a=>a.color && maskCount(a)>0); }
+
+function maskCanvasFor(a){
+  if(a._mc && a._mcRev===a.rev) return a._mc;
+  const c=a._mc || document.createElement('canvas');
+  c.width=state.w; c.height=state.h;
+  const g=c.getContext('2d');
+  const im=g.createImageData(state.w,state.h), dd=im.data, m=a.mask;
+  for(let i=0,j=0;i<m.length;i++,j+=4){ dd[j]=194; dd[j+1]=163; dd[j+2]=107; dd[j+3]=m[i]; }
+  g.putImageData(im,0,0);
+  a._mc=c; a._mcRev=a.rev; return c;
+}
+function featheredAlpha(a, feather){
+  const w=state.w, h=state.h;
+  const c=document.createElement('canvas'); c.width=w; c.height=h;
+  const g=c.getContext('2d', {willReadFrequently:true});
+  if(feather>0) g.filter=`blur(${feather}px)`;
+  g.drawImage(maskCanvasFor(a),0,0);
+  g.filter='none';
+  return g.getImageData(0,0,w,h).data;
+}
+
+function mergeIntoActive(m){
+  const a=activeArea().mask;
+  if(state.eraseMode){ for(let i=0;i<a.length;i++) if(m[i]) a[i]=0; }
+  else { for(let i=0;i<a.length;i++) if(m[i]) a[i]=255; }
+}
+
+function renderAreaRow(){
+  if(state.mode!=='photo'){ areaRow.classList.add('is-hidden'); return; }
+  areaRow.classList.remove('is-hidden');
+  areaRow.innerHTML='<span class="lbl">Áreas</span>';
+  state.areas.forEach((a,i)=>{
+    const c=document.createElement('button'); c.className='area-chip'; c.type='button';
+    c.setAttribute('aria-pressed', String(i===state.activeArea));
+    c.innerHTML=`<span class="dot" style="background:${a.color?a.color.hex:'transparent'}"></span>${a.name}`
+      + (state.areas.length>1?`<span class="x" title="Remover">×</span>`:'');
+    c.addEventListener('click', e=>{
+      if(e.target.classList.contains('x')){ removeArea(i); return; }
+      state.activeArea=i; syncColorUi(); renderAreaRow(); renderComposite();
+      setStatus(`Editando ${a.name}${a.color?' ('+a.color.name+')':''}.`, '');
+    });
+    areaRow.appendChild(c);
+  });
+  if(state.areas.length<MAX_AREAS){
+    const add=document.createElement('button'); add.className='area-add'; add.type='button'; add.textContent='+ Nova área';
+    add.addEventListener('click', addArea);
+    areaRow.appendChild(add);
+  }
+}
+function addArea(){
+  if(state.areas.length>=MAX_AREAS) return;
+  state.areas.push(newArea(`Área ${state.areas.length+1}`));
+  state.activeArea=state.areas.length-1;
+  syncColorUi(); renderAreaRow(); renderComposite();
+  setStatus('Nova área — toque na parede que ainda falta pintar.', '');
+}
+function removeArea(i){
+  state.areas.splice(i,1);
+  if(!state.areas.length) state.areas.push(newArea('Área 1'));
+  state.activeArea=Math.min(state.activeArea, state.areas.length-1);
+  invalidatePaint(); syncColorUi(); renderAreaRow(); renderComposite(); updateProjButtons();
+}
+
+/* ---------- aplicar cor ---------- */
+function paintSelectedBar(col){
+  if(!col){ infoChip.style.background='#333'; infoName.textContent='Nenhuma cor aplicada';
+    infoMeta.textContent='Escolha uma cor no leque'; btnCopy.disabled=true; return; }
+  infoChip.style.background=col.hex;
+  infoName.textContent=col.name;
+  infoMeta.textContent = col.meta ? col.meta : `${col.code} · ${col.hex}`;
+  btnCopy.disabled=false;
+}
+function markSwatch(code){ document.querySelectorAll('.swatch').forEach(b=> b.dataset.active=String(b.dataset.code===code)); }
+function syncColorUi(){ const c=currentColor(); paintSelectedBar(c); markSwatch(c?c.code:''); }
+
+function applyColor(name,code,hex,metaText){
+  const col={name,code,hex,meta:metaText||null};
+  if(state.mode==='sample'){
+    state.sampleColor=col; sampleWall.setAttribute('fill',hex);
+    paintSelectedBar(col); markSwatch(code); return;
+  }
+  activeArea().color=col; touch(activeArea());
+  paintSelectedBar(col); markSwatch(code);
+  invalidatePaint(); renderComposite(); renderAreaRow(); updateProjButtons();
+}
+
+btnCopy.addEventListener('click', ()=>{
+  const sc=currentColor(); if(!sc) return;
+  const t = sc.meta ? `${sc.name} · ${sc.meta}` : `${sc.name} · ${sc.code}`;
+  navigator.clipboard?.writeText(t).then(()=>{ btnCopy.textContent='Copiado ✓'; setTimeout(()=>btnCopy.textContent='Copiar',1400); });
+});
+
+/* ---------- Comparação A/B/C ---------- */
+function buildSlots(){
+  slotsEl.innerHTML='';
+  ['A','B','C'].forEach((k,i)=>{
+    const b=document.createElement('button'); b.className='slot'; b.type='button'; b.dataset.i=i;
+    b.setAttribute('aria-pressed', String(state.activeSlot===i));
+    b.innerHTML=`<span class="k">${k}</span><span class="sw" data-sw></span><span class="nm" data-nm>vazio</span>`;
+    b.addEventListener('click', ()=>{
+      state.activeSlot=i; const s=state.slots[i];
+      renderSlots();
+      if(s){ applyColor(s.name,s.code,s.hex,s.meta); }
+    });
+    slotsEl.appendChild(b);
+  });
+  renderSlots();
+}
+function renderSlots(){
+  [...slotsEl.children].forEach((b,i)=>{
+    b.setAttribute('aria-pressed', String(state.activeSlot===i));
+    const s=state.slots[i];
+    b.querySelector('[data-sw]').style.background = s?s.hex:'var(--surface)';
+    b.querySelector('[data-nm]').textContent = s? s.code : 'vazio';
+  });
+}
+btnAddSlot.addEventListener('click', ()=>{
+  const cur=currentColor(); if(!cur) return;
+  const empty = state.slots.findIndex(s=>!s);
+  const idx = empty>=0 ? empty : (state.activeSlot+1)%3;
+  state.slots[idx]={...cur}; state.activeSlot=idx; renderSlots();
+});
+
+/* ---------- Antes / depois ---------- */
+btnBeforeAfter.addEventListener('click', ()=>{
+  const on = state.wipe>=1;
+  state.wipe = on ? 0.5 : 1;
+  updateWipeUi(); renderComposite();
+});
+function updateWipeUi(){
+  const on = state.wipe<1;
+  wipeHandle.classList.toggle('on',on); wipeTagBefore.classList.toggle('on',on); wipeTagAfter.classList.toggle('on',on);
+  btnBeforeAfter.textContent = on ? 'Ver só o depois' : 'Antes / depois';
+  if(on){ wipeHandle.style.left = (state.wipe*100)+'%'; }
+}
+(function wipeDrag(){
+  let dragging=false;
+  const move = clientX => {
+    const r=stage.getBoundingClientRect();
+    state.wipe = Math.min(0.999, Math.max(0.001, (clientX-r.left)/r.width));
+    wipeHandle.style.left=(state.wipe*100)+'%'; renderComposite();
+  };
+  wipeHandle.addEventListener('pointerdown', e=>{ dragging=true; wipeHandle.setPointerCapture(e.pointerId); });
+  wipeHandle.addEventListener('pointermove', e=>{ if(dragging) move(e.clientX); });
+  wipeHandle.addEventListener('pointerup', ()=>{ dragging=false; });
+})();
+
+/* ---------- Ferramentas de seleção ---------- */
+toolSeg.querySelectorAll('button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    state.tool=b.dataset.tool;
+    toolSeg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+    optWand.hidden = state.tool!=='wand';
+    optBrush.hidden = state.tool!=='brush';
+    if(state.tool!=='brush') hideBrushRing();
+    setStatus(TOOL_HINT[state.tool], '');
+  });
+});
+
+/* anel que mostra o tamanho do pincel seguindo o mouse */
+function brushRingPx(){ const r=canvas.getBoundingClientRect(); return state.brushSize*2*(r.width/state.w); }
+function moveBrushRing(e){
+  if(state.tool!=='brush' || state.mode!=='photo'){ hideBrushRing(); return; }
+  const r=stage.getBoundingClientRect();
+  const d=brushRingPx();
+  brushRing.style.width=d+'px'; brushRing.style.height=d+'px';
+  brushRing.style.left=(e.clientX-r.left)+'px';
+  brushRing.style.top=(e.clientY-r.top)+'px';
+  brushRing.classList.add('on');
+}
+function hideBrushRing(){ brushRing.classList.remove('on'); }
+canvas.addEventListener('pointermove', moveBrushRing);
+canvas.addEventListener('pointerenter', moveBrushRing);
+canvas.addEventListener('pointerleave', hideBrushRing);
+const TOOL_HINT = {
+  smart:'Toque inteligente — toque no meio da parede; a IA acha o contorno.',
+  wand:'Varinha — toque numa cor; seleciona tudo que for parecido. Ajuste a “Semelhança”.',
+  brush:'Pincel — arraste sobre a foto pra pintar a seleção à mão. Marque “Desmarcar / apagar” pra tirar.',
+};
+$('#chkRemove').addEventListener('change', e=>{ state.eraseMode=e.target.checked; });
+$('#rngTol').addEventListener('input', e=>{ state.wandTolerance=+e.target.value; $('#valTol').textContent=e.target.value; });
+$('#chkWandGlobal').addEventListener('change', e=>{ state.wandGlobal=e.target.checked; });
+$('#rngBrush').addEventListener('input', e=>{ state.brushSize=+e.target.value; $('#valBrush').textContent=e.target.value;
+  if(brushRing.classList.contains('on')){ const d=brushRingPx(); brushRing.style.width=d+'px'; brushRing.style.height=d+'px'; } });
+
+$('#btnUndo').addEventListener('click', ()=>{
+  const a=activeArea(); if(!a || !a._undo.length){ setStatus('Nada pra desfazer nesta área.',''); return; }
+  a.mask=a._undo.pop(); touch(a); invalidatePaint(); renderComposite(); updateProjButtons();
+  setStatus('Desfeito.', '');
+});
+$('#btnClear').addEventListener('click', ()=>{
+  const a=activeArea(); if(!a) return;
+  pushUndo(a); a.mask=new Uint8ClampedArray(state.w*state.h); touch(a);
+  invalidatePaint(); renderComposite(); updateProjButtons();
+  setStatus('Área limpa — toque na parede de novo.', '');
+});
+
+/* ---------- Ajuste fino ---------- */
+$('#chkTune').addEventListener('change', e=> $('#tune').classList.toggle('on', e.target.checked));
+$('#rngStrength').addEventListener('input', e=>{ state.strength=+e.target.value/100; $('#valStrength').textContent=e.target.value+'%'; invalidatePaint(); renderComposite(); });
+$('#rngTexture').addEventListener('input', e=>{ const v=+e.target.value; state.texture=v/100;
+  $('#valTexture').textContent = v<33?'pouca':v<70?'média':'muita'; invalidatePaint(); renderComposite(); });
+$('#rngFeather').addEventListener('input', e=>{ state.feather=+e.target.value; $('#valFeather').textContent=e.target.value+' px'; invalidatePaint(); renderComposite(); });
+$('#selFinish').addEventListener('change', e=>{ state.finish=e.target.value; invalidatePaint(); renderComposite(); });
+
+/* ---------- upload ---------- */
+dropzone.addEventListener('click', ()=>fileInput.click());
+dropzone.addEventListener('dragover', e=>{ e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', ()=>dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e=>{ e.preventDefault(); dropzone.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+function handleFile(file){ const img=new Image(); img.onload=()=>useImage(img); img.src=URL.createObjectURL(file); }
+
+function useImage(img){
+  const MAX_DIM=1024;
+  let w=img.naturalWidth, h=img.naturalHeight;
+  const scale=Math.min(1, MAX_DIM/Math.max(w,h));
+  w=Math.round(w*scale); h=Math.round(h*scale);
+  canvas.width=w; canvas.height=h;
+  const base=document.createElement('canvas'); base.width=w; base.height=h;
+  const bctx=base.getContext('2d', {willReadFrequently:true});
+  bctx.drawImage(img,0,0,w,h);
+  state.baseCanvas=base;
+  state.baseData=bctx.getImageData(0,0,w,h).data;
+  state.w=w; state.h=h;
+  state.mode='photo';
+  state.areas=[ newArea('Área 1') ]; state.activeArea=0;
+  state.wipe=1; invalidatePaint(); updateWipeUi();
+  sampleSvg.classList.add('is-hidden'); canvas.classList.remove('is-hidden');
+  sampleBadge.classList.add('is-hidden'); toolbar.classList.remove('is-hidden');
+  dropzoneTitle.textContent='Trocar foto'; dropzoneSub.textContent='ou arraste outro arquivo aqui';
+  syncColorUi(); renderAreaRow(); renderGrid(); renderComposite();
+  setStatus('Foto carregada — '+TOOL_HINT[state.tool], 'ok');
+  if(state.tool==='smart') getSegmenter().catch(()=>{});   // aquece o modelo
+  updateProjButtons();
+}
+
+/* ---------- seleção: pointer na cena ---------- */
+let painting=false, lastPt=null, renderQueued=false;
+function scheduleRender(){ if(renderQueued) return; renderQueued=true; requestAnimationFrame(()=>{ renderQueued=false; renderComposite(); }); }
+
+function canvasPt(e){
+  const r=canvas.getBoundingClientRect();
+  const x=(e.clientX-r.left)*(state.w/r.width);
+  const y=(e.clientY-r.top)*(state.h/r.height);
+  return { x, y, xi:Math.max(0,Math.min(state.w-1, x|0)), yi:Math.max(0,Math.min(state.h-1, y|0)) };
+}
+
+canvas.addEventListener('pointerdown', onDown);
+canvas.addEventListener('pointermove', onMove);
+window.addEventListener('pointerup', onUp);
+
+async function onDown(e){
+  if(state.mode!=='photo') return;
+  const p=canvasPt(e);
+  if(state.tool==='brush'){
+    painting=true; try{ canvas.setPointerCapture(e.pointerId); }catch(_){}
+    pushUndo(activeArea()); stampBrush(p.xi,p.yi); lastPt=p; touch(activeArea()); scheduleRender();
+  } else if(state.tool==='wand'){
+    pushUndo(activeArea());
+    setStatus('Selecionando por cor…', 'busy');
+    setTimeout(()=>{                       // deixa o status pintar antes do trabalho síncrono
+      const m=wandAt(p.xi,p.yi, state.wandTolerance, state.wandGlobal);
+      applyCandidate(m);
+    }, 0);
+  } else {                                 // smart (MediaPipe)
+    pushUndo(activeArea());
+    spin(true); setStatus('Identificando a área da parede…', 'busy');
+    try{
+      const m=await smartClickAt(p.x/state.w, p.y/state.h, p.xi, p.yi);
+      applyCandidate(m);
+    }catch(err){
+      console.error(err);
+      setStatus('Não consegui carregar a IA de seleção. Use a 🪄 Varinha ou o 🖌️ Pincel (funcionam sem internet).', 'err');
+    }finally{ spin(false); }
+  }
+}
+function onMove(e){
+  if(!painting || state.tool!=='brush') return;
+  const p=canvasPt(e);
+  if(lastPt) strokeBrush(lastPt, p);
+  lastPt=p; touch(activeArea()); scheduleRender();
+}
+function onUp(){
+  if(!painting) return;
+  painting=false; lastPt=null;
+  invalidatePaint(); renderComposite(); updateProjButtons();
+  afterSelect();
+}
+
+/* Confere o tamanho da seleção ANTES de aplicar — evita pintar a foto toda
+   e só depois avisar. Se passar do limite, descarta a seleção sem mexer na máscara. */
+function applyCandidate(m){
+  const a=activeArea();
+  if(!state.eraseMode){
+    const frac = m.reduce((s,v)=>s+(v?1:0),0) / m.length;
+    if(frac>0.92){
+      if(a._undo.length) a._undo.pop();  // nada mudou, descarta o undo que não vai servir
+      setStatus('Essa seleção pegou quase a foto toda. Toque num ponto mais dentro da parede, ou baixe a “Semelhança”.', 'err');
+      return;
+    }
+  }
+  mergeIntoActive(m); touch(a);
+  afterSelect();
+}
+
+function afterSelect(){
+  invalidatePaint(); renderComposite(); updateProjButtons();
+  const a=activeArea();
+  setStatus(a.color
+    ? `${a.name} pintada. Ajuste com a Varinha/Pincel, ou crie uma “Nova área” pra outra parede.`
+    : 'Área selecionada — escolha a cor no leque. Pra tirar um pedaço, marque “Desmarcar / apagar”.', 'ok');
+}
+
+/* MediaPipe: 1 keypoint -> objeto tocado.
+   O magic_touch marca o objeto selecionado com 255. Fazemos uma votação num
+   raio de 2 px em volta do toque pra não errar por desalinhamento de 1 pixel. */
+async function smartClickAt(nx,ny,xi,yi){
+  const seg=await getSegmenter();
+  const res=seg.segment(state.baseCanvas, { keypoint:{ x:nx, y:ny } });
+  const w=state.w, h=state.h;
+  const u8=res.categoryMask.getAsUint8Array();
+  let hi=0, lo=0;
+  for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){
+    const x=xi+dx, y=yi+dy; if(x<0||y<0||x>=w||y>=h) continue;
+    u8[y*w+x] ? hi++ : lo++;
+  }
+  const fg = hi>=lo ? 255 : 0;             // classe dominante no ponto tocado
+  const m=new Uint8ClampedArray(w*h);
+  for(let i=0;i<m.length;i++) m[i]=((u8[i]?255:0)===fg)?255:0;
+  res.categoryMask && res.categoryMask.close();
+  (res.confidenceMasks||[]).forEach(x=>x.close && x.close());
+  res.close && res.close();
+  return m;
+}
+
+/* Varinha: flood fill por semelhança de cor. global=true -> a foto toda. */
+function wandAt(px,py,tol,global){
+  const w=state.w, h=state.h, src=state.baseData;
+  const o0=(py*w+px)*4, r0=src[o0], g0=src[o0+1], b0=src[o0+2];
+  const t2=tol*tol*3;
+  const m=new Uint8ClampedArray(w*h);
+  if(global){
+    for(let p=0;p<w*h;p++){ const o=p*4; const dr=src[o]-r0,dg=src[o+1]-g0,db=src[o+2]-b0;
+      if(dr*dr+dg*dg+db*db<=t2) m[p]=255; }
+    return m;
+  }
+  const stack=[py*w+px];
+  while(stack.length){
+    const p=stack.pop();
+    if(m[p]) continue;
+    const o=p*4; const dr=src[o]-r0,dg=src[o+1]-g0,db=src[o+2]-b0;
+    if(dr*dr+dg*dg+db*db>t2) continue;
+    m[p]=255;
+    const x=p%w, y=(p/w)|0;
+    if(x>0) stack.push(p-1);
+    if(x<w-1) stack.push(p+1);
+    if(y>0) stack.push(p-w);
+    if(y<h-1) stack.push(p+w);
+  }
+  return m;
+}
+
+/* Pincel */
+function stampBrush(cx,cy){
+  const a=activeArea().mask, w=state.w, h=state.h;
+  const rad=state.brushSize, r2=rad*rad;
+  const val=state.eraseMode?0:255;
+  const x0=Math.max(0,cx-rad), x1=Math.min(w-1,cx+rad), y0=Math.max(0,cy-rad), y1=Math.min(h-1,cy+rad);
+  for(let y=y0;y<=y1;y++){ const row=y*w; for(let x=x0;x<=x1;x++){ const dx=x-cx,dy=y-cy; if(dx*dx+dy*dy<=r2) a[row+x]=val; } }
+}
+function strokeBrush(p0,p1){
+  const dist=Math.hypot(p1.xi-p0.xi, p1.yi-p0.yi);
+  const steps=Math.max(1, Math.round(dist/Math.max(2,state.brushSize/2)));
+  for(let i=1;i<=steps;i++){ const t=i/steps;
+    stampBrush(Math.round(p0.xi+(p1.xi-p0.xi)*t), Math.round(p0.yi+(p1.yi-p0.yi)*t)); }
+}
+
+/* ---------- ENGINE de recolor (realismo) ---------- */
+function invalidatePaint(){ state.paintedCache=null; state.cacheKey=''; }
+
+/* Recolore uma área preservando a variação de luz da foto.
+   Em luz linear, mede a luminância média da área (meanL) na FOTO ORIGINAL e,
+   por pixel, aplica a cor-alvo escalada por (Lpixel / meanL). Lê sempre da foto
+   original (base) e escreve no buffer de saída -> a ordem das áreas não importa. */
+function relightInto(d, base, alpha, color, st){
+  const [R,G,B]=hexToRgb(color.hex);
+  const tr=S2L[R], tg=S2L[G], tb=S2L[B];
+
+  let sumL=0, sumW=0;
+  for(let i=0;i<d.length;i+=4){
+    const a=alpha[i+3]; if(!a) continue;
+    const L=0.2126*S2L[base[i]]+0.7152*S2L[base[i+1]]+0.0722*S2L[base[i+2]];
+    const w=a/255; sumL+=L*w; sumW+=w;
+  }
+  const meanL = sumW ? sumL/sumW : 0.25;
+
+  let gamma=1.0, spec=0.0;
+  if(st.finish==='fosco'){ gamma=1.05; }
+  else if(st.finish==='semibrilho'){ gamma=0.9; spec=0.35; }
+  else if(st.finish==='alto'){ gamma=0.78; spec=0.7; }
+
+  const tex=st.texture;
+  for(let i=0;i<d.length;i+=4){
+    const a=alpha[i+3]; if(!a) continue;
+    const wgt=(a/255)*st.strength;
+    const rl=S2L[base[i]], gl=S2L[base[i+1]], bl=S2L[base[i+2]];
+    const L=0.2126*rl+0.7152*gl+0.0722*bl;
+    let ratio=L/(meanL||1e-4);
+    ratio = 1 + (ratio-1)*tex;
+    ratio = Math.max(0.15, Math.min(2.2, ratio));
+    ratio = Math.pow(ratio, gamma);
+    let nr=tr*ratio, ng=tg*ratio, nb=tb*ratio;
+    if(spec>0 && ratio>1){
+      const k=Math.min(1,(ratio-1))*spec;
+      nr+=(1-nr)*k; ng+=(1-ng)*k; nb+=(1-nb)*k;
+    }
+    d[i]  = lin2byte(rl+(nr-rl)*wgt);
+    d[i+1]= lin2byte(gl+(ng-gl)*wgt);
+    d[i+2]= lin2byte(bl+(nb-bl)*wgt);
+  }
+}
+
+/* pinta a cena inteira (todas as áreas) a partir de um base opcional */
+function paintSceneFrom(areas, baseCanvas, baseData){
+  const w=baseCanvas.width, h=baseCanvas.height;
+  const out=document.createElement('canvas'); out.width=w; out.height=h;
+  const octx=out.getContext('2d', {willReadFrequently:true});
+  octx.drawImage(baseCanvas,0,0);
+  const live=areas.filter(a=>a.color && maskCount(a)>0);
+  if(!live.length) return out;
+  const img=octx.getImageData(0,0,w,h), d=img.data;
+  for(const a of live){
+    const alpha=featheredAlpha(a, state.feather);
+    relightInto(d, baseData, alpha, a.color, state);
+  }
+  octx.putImageData(img,0,0);
+  return out;
+}
+
+function paintKey(){
+  return state.areas.map(a=>(a.color?a.color.code:'-')+':'+a.rev).join('|')
+       + '#'+[state.strength,state.texture,state.feather,state.finish].join(',');
+}
+function getPainted(){
+  if(!state.baseCanvas) return null;
+  const key=paintKey();
+  if(state.paintedCache && state.cacheKey===key) return state.paintedCache;
+  state.paintedCache = paintSceneFrom(state.areas, state.baseCanvas, state.baseData);
+  state.cacheKey=key;
+  return state.paintedCache;
+}
+
+/* ---------- compor a cena ---------- */
+function renderComposite(){
+  if(!state.baseCanvas) return;
+  const w=state.w, h=state.h;
+  ctx.clearRect(0,0,w,h);
+  ctx.drawImage(state.baseCanvas,0,0);
+
+  if(anyPainted()){
+    const painted=getPainted();
+    if(state.wipe<1){
+      ctx.save();
+      ctx.beginPath(); ctx.rect(w*state.wipe,0,w*(1-state.wipe),h); ctx.clip();
+      ctx.drawImage(painted,0,0); ctx.restore();
+    } else {
+      ctx.drawImage(painted,0,0);
+    }
+  }
+
+  // seleção da área ATIVA: sem cor -> mancha dourada; com cor -> só o contorno.
+  const act=activeArea();
+  if(state.showMask && act && maskCount(act)>0){
+    const mc=maskCanvasFor(act);
+    if(act.color){
+      const tmp=document.createElement('canvas'); tmp.width=w; tmp.height=h;
+      const tg=tmp.getContext('2d'); tg.drawImage(mc,0,0);
+      const s=3; tg.globalCompositeOperation='destination-out';
+      tg.drawImage(mc, s, s, w-2*s, h-2*s);
+      ctx.save(); ctx.globalAlpha=0.9; ctx.drawImage(tmp,0,0); ctx.restore();
+    } else {
+      ctx.save(); ctx.globalAlpha=0.32; ctx.drawImage(mc,0,0); ctx.restore();
+    }
+  }
+
+  btnBeforeAfter.disabled = !anyPainted();
+  stageActions.classList.toggle('is-hidden', state.mode!=='photo');
+  btnDownloadImg.disabled = !state.baseCanvas;
+  updateProjButtons();
+}
+
+/* ---------- baixar imagem (foto pintada + rodapé com as cores) ---------- */
+function paintedColors(){
+  return state.areas.filter(a=>a.color && maskCount(a)>0).map(a=>({...a.color}));
+}
+function drawImgFooter(g, W, H, cols){
+  if(!cols.length) return;
+  const fs = Math.max(14, Math.round(W*0.024));
+  const line = fs*1.5;
+  const rows = Math.min(3, cols.length);
+  const padY = Math.round(line*rows + fs*1.6);
+  const grd=g.createLinearGradient(0,H-padY,0,H);
+  grd.addColorStop(0,'rgba(17,17,19,0)'); grd.addColorStop(.35,'rgba(17,17,19,.55)'); grd.addColorStop(1,'rgba(17,17,19,.9)');
+  g.fillStyle=grd; g.fillRect(0,H-padY,W,padY);
+  const x=Math.round(W*0.04);
+  let y=H-padY+fs*1.4;
+  g.textAlign='left'; g.textBaseline='alphabetic';
+  cols.slice(0,3).forEach((c,i)=>{
+    const box=fs*1.05;
+    g.fillStyle=c.hex; g.fillRect(x, y-box, box, box);
+    g.strokeStyle='rgba(255,255,255,.4)'; g.lineWidth=1; g.strokeRect(x, y-box, box, box);
+    g.fillStyle='#f2eee5'; g.font=`600 ${fs}px Sora, Inter, sans-serif`;
+    const tail=c.code||c.meta||'';
+    let label=`${c.name}${tail?'   ·   '+tail:''}`;
+    if(i===2 && cols.length>3) label += `   +${cols.length-3}`;
+    g.fillText(label, x+box+fs*0.7, y-box*0.15);
+    y+=line;
+  });
+  g.textAlign='right'; g.font=`700 ${fs}px Sora, sans-serif`;
+  const wm=H-Math.round(fs*0.9);
+  g.fillStyle='rgba(242,238,229,.92)'; g.fillText('decor', W-x-g.measureText('colors').width-2, wm);
+  g.fillStyle='rgba(194,163,107,.95)'; g.fillText('colors', W-x, wm);
+}
+function downloadImage(){
+  if(!state.baseCanvas) return;
+  const src=getPainted();                     // composição limpa, sem contorno de seleção
+  const W=src.width, H=src.height;
+  const out=document.createElement('canvas'); out.width=W; out.height=H;
+  const g=out.getContext('2d');
+  g.drawImage(src,0,0);
+  const cols=paintedColors();
+  drawImgFooter(g, W, H, cols);
+  // tudo síncrono (não perde a "user activation") e via blob: URL (data: URL o
+  // Chrome às vezes bloqueia em <a download>).
+  const dataUrl=out.toDataURL('image/jpeg', 0.92);
+  const bin=atob(dataUrl.split(',')[1]);
+  const buf=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) buf[i]=bin.charCodeAt(i);
+  const url=URL.createObjectURL(new Blob([buf], {type:'image/jpeg'}));
+  const a=document.createElement('a');
+  const code=(cols[0] && (cols[0].code||cols[0].name)) || 'simulacao';
+  a.href=url; a.download=`decorcolors-${String(code).replace(/[^\w.-]+/g,'')}.jpg`;
+  a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 5000);
+  btnDownloadImg.textContent='Imagem baixada ✓';
+  setTimeout(()=>btnDownloadImg.textContent='Baixar imagem (JPG)', 1600);
+}
+btnDownloadImg.addEventListener('click', downloadImage);
+
+/* ==========================================================================
+   PROJETO DO AMBIENTE — várias paredes -> vídeo tour (Ken Burns), 1:1, no navegador
+   ========================================================================== */
+const projGrid=$('#projGrid'), projEmpty=$('#projEmpty'), btnAddWall=$('#btnAddWall');
+const btnMakeVideo=$('#btnMakeVideo'), rngPerWall=$('#rngPerWall'), valPerWall=$('#valPerWall');
+const projProgress=$('#projProgress'), projBar=$('#projBar'), projProgTxt=$('#projProgTxt');
+const projOut=$('#projOut'), projVideo=$('#projVideo'), projDownload=$('#projDownload'), projOutNote=$('#projOutNote');
+const MAX_WALLS=4;
+
+function updateProjButtons(){
+  const canAdd = state.mode==='photo' && anyPainted() && project.walls.length<MAX_WALLS;
+  btnAddWall.disabled = !canAdd;
+  btnAddWall.textContent = project.walls.length>=MAX_WALLS
+    ? 'Projeto cheio (4 paredes)'
+    : '+ Adicionar parede atual ao projeto';
+  btnMakeVideo.disabled = project.walls.length<1 || state._rendering;
+}
+
+rngPerWall.addEventListener('input', e=>{ project.secPerWall=+e.target.value; valPerWall.textContent=e.target.value+'s'; });
+
+btnAddWall.addEventListener('click', ()=>{
+  if(btnAddWall.disabled) return;
+  const painted = getPainted();
+  const cols = paintedColors();
+  if(!cols.length) return;
+  const th=document.createElement('canvas'); th.width=360; th.height=360;
+  drawCover(th.getContext('2d'), painted, 360, 360, 0, 0);
+  project.walls.push({
+    name: `Parede ${project.walls.length+1}`,
+    color: cols[0], colors: cols,
+    painted,
+    thumb: th.toDataURL('image/jpeg', 0.8),
+  });
+  renderProjGrid(); updateProjButtons();
+  projPanelFlash();
+});
+
+function renderProjGrid(){
+  projGrid.innerHTML='';
+  projEmpty.hidden = project.walls.length>0;
+  project.walls.forEach((wall, i)=>{
+    const cols = wall.colors || [wall.color];
+    const colLine = cols.map(c=>`${c.name}${(c.code||c.meta)?' · '+(c.code||c.meta):''}`).join('  |  ');
+    const card=document.createElement('div'); card.className='wall-card';
+    card.innerHTML=`
+      <img class="thumb" src="${wall.thumb}" alt="">
+      <div class="body">
+        <input class="nm" value="${wall.name.replace(/"/g,'&quot;')}" maxlength="24">
+        <div class="col"><span class="sw" style="background:${cols[0].hex}"></span>${colLine}</div>
+        <div class="row">
+          <button data-a="up" ${i===0?'disabled':''}>↑</button>
+          <button data-a="down" ${i===project.walls.length-1?'disabled':''}>↓</button>
+          <button data-a="del" class="del">remover</button>
+        </div>
+      </div>`;
+    card.querySelector('.nm').addEventListener('input', e=> wall.name=e.target.value||`Parede ${i+1}`);
+    card.querySelector('[data-a="up"]').addEventListener('click', ()=>{ if(i>0){ [project.walls[i-1],project.walls[i]]=[project.walls[i],project.walls[i-1]]; renderProjGrid(); } });
+    card.querySelector('[data-a="down"]').addEventListener('click', ()=>{ if(i<project.walls.length-1){ [project.walls[i+1],project.walls[i]]=[project.walls[i],project.walls[i+1]]; renderProjGrid(); } });
+    card.querySelector('[data-a="del"]').addEventListener('click', ()=>{ project.walls.splice(i,1); renderProjGrid(); updateProjButtons(); });
+    projGrid.appendChild(card);
+  });
+}
+
+function projPanelFlash(){
+  $('#projectPanel').animate(
+    [{boxShadow:'0 0 0 2px var(--accent) inset'},{boxShadow:'0 0 0 0 transparent inset'}],
+    {duration:600});
+}
+
+/* ---- desenho: cobrir um retângulo com uma imagem (object-fit: cover) + zoom/pan ---- */
+function drawCover(g, src, W, H, panX=0, zoom=0){
+  const sw=src.width, sh=src.height;
+  const base=Math.max(W/sw, H/sh);
+  const scale=base*(1+zoom);
+  const dw=sw*scale, dh=sh*scale;
+  const maxShift=(dw-W)/2;
+  const dx=(W-dw)/2 + panX*maxShift;
+  const dy=(H-dh)/2;
+  g.drawImage(src, dx, dy, dw, dh);
+}
+const easeInOut = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+
+function drawCard(g, W, H, lines, opts={}){
+  g.save();
+  g.globalAlpha=1;
+  g.fillStyle = opts.bg || '#111113';
+  g.fillRect(0,0,W,H);
+  let y = opts.top || H*0.34;
+  lines.forEach(ln=>{
+    g.font = `${ln.weight||600} ${ln.size||34}px Sora, Inter, sans-serif`;
+    const sz = ln.size||34;
+    if(ln.sw){
+      const gap=12, box=sz*0.85;
+      const tw = g.measureText(ln.t).width;
+      const x0 = W/2 - (box+gap+tw)/2;
+      g.fillStyle=ln.sw; g.fillRect(x0, y-box*0.85, box, box);
+      g.strokeStyle='rgba(255,255,255,.25)'; g.lineWidth=1; g.strokeRect(x0, y-box*0.85, box, box);
+      g.fillStyle = ln.color || '#f2eee5'; g.textAlign='left';
+      g.fillText(ln.t, x0+box+gap, y);
+    } else {
+      g.fillStyle = ln.color || '#f2eee5'; g.textAlign='center';
+      g.fillText(ln.t, W/2, y);
+    }
+    y += (ln.gap||sz) + 14;
+  });
+  g.restore();
+}
+
+function drawWatermark(g, W, H){
+  g.save();
+  g.globalAlpha=.85; g.textAlign='right';
+  g.font='700 22px Sora, sans-serif'; g.fillStyle='rgba(242,238,229,.9)';
+  g.fillText('decor', W-96, 40); g.fillStyle='rgba(194,163,107,.95)'; g.fillText('colors', W-40, 40);
+  g.restore();
+}
+
+function drawLowerThird(g, W, H, wall, alpha){
+  if(alpha<=0) return;
+  g.save(); g.globalAlpha=alpha;
+  const padY=H*0.14;
+  const grd=g.createLinearGradient(0,H-padY,0,H);
+  grd.addColorStop(0,'rgba(17,17,19,0)'); grd.addColorStop(1,'rgba(17,17,19,.82)');
+  g.fillStyle=grd; g.fillRect(0,H-padY,W,padY);
+  g.textAlign='left';
+  g.fillStyle='#f2eee5'; g.font='700 34px Sora, sans-serif';
+  g.fillText(wall.name, 48, H-70);
+  const sw=26;
+  g.fillStyle=wall.color.hex; g.fillRect(48, H-56, sw, sw);
+  g.strokeStyle='rgba(255,255,255,.35)'; g.lineWidth=1; g.strokeRect(48,H-56,sw,sw);
+  g.fillStyle='rgba(242,238,229,.92)'; g.font='500 22px Inter, sans-serif';
+  const cols=wall.colors||[wall.color];
+  const tail = wall.color.code || wall.color.meta || '';
+  const extra = cols.length>1 ? `   +${cols.length-1} cor` : '';
+  g.fillText(`${wall.color.name}${tail?'  ·  '+tail:''}${extra}`, 48+sw+14, H-36);
+  g.restore();
+}
+
+function pickRecorderMime(){
+  const cands=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+  for(const c of cands) if(window.MediaRecorder && MediaRecorder.isTypeSupported(c)) return c;
+  return '';
+}
+
+async function renderVideo(){
+  if(!project.walls.length || state._rendering) return;
+  state._rendering=true; updateProjButtons();
+  projOut.hidden=true; projProgress.hidden=false; projBar.style.width='0%'; projProgTxt.textContent='Preparando…';
+  if(project.videoUrl){ URL.revokeObjectURL(project.videoUrl); project.videoUrl=null; }
+
+  const W=720, H=720, fps=24;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const g=cv.getContext('2d');
+  const stream=cv.captureStream(fps);
+  const mime=pickRecorderMime();
+  const rec=new MediaRecorder(stream, mime ? {mimeType:mime, videoBitsPerSecond:5_000_000} : {videoBitsPerSecond:5_000_000});
+  const chunks=[]; rec.ondataavailable=e=>{ if(e.data && e.data.size) chunks.push(e.data); };
+  const stopped=new Promise(res=> rec.onstop=res);
+
+  const INTRO=1.7, OUTRO=3.6, XF=0.45, per=project.secPerWall;
+  const segs=[];
+  segs.push({dur:INTRO, label:'abertura', draw:(t)=>{
+    drawCard(g,W,H,[
+      {t:'SIMULAÇÃO DE CORES', size:36, weight:800, color:'#f2eee5'},
+      {t:'Decor Colors · São Dimas', size:20, weight:600, color:'#c2a36b', gap:22},
+    ], {top:H*0.42});
+    drawWatermark(g,W,H);
+    const a = t<0.25 ? t/0.25 : t>0.85 ? (1-t)/0.15 : 1;
+    g.save(); g.globalAlpha=1-Math.max(0,Math.min(1,a)); g.fillStyle='#000'; g.fillRect(0,0,W,H); g.restore();
+  }});
+  project.walls.forEach((wall,wi)=>{
+    const nxt = project.walls[wi+1] ? project.walls[wi+1].painted : null;
+    segs.push({dur:per, label:wall.name, draw:(t)=>{
+      g.fillStyle='#000'; g.fillRect(0,0,W,H);
+      const zoom=0.02 + 0.10*easeInOut(t);
+      const pan=(-1 + 2*easeInOut(t))*0.45;
+      drawCover(g, wall.painted, W, H, pan, zoom);
+      const tailStart = 1 - (XF/per);
+      if(nxt && t>tailStart){ const a=(t-tailStart)/(XF/per); g.save(); g.globalAlpha=a; drawCover(g,nxt,W,H,-0.45,0.02); g.restore(); }
+      drawWatermark(g,W,H);
+      const cap = t<0.12 ? t/0.12 : t>0.9 ? (1-t)/0.1 : 1;
+      drawLowerThird(g,W,H, wall, Math.max(0,Math.min(1,cap)));
+    }});
+  });
+  const outLines=[{t:'A combinação do ambiente', size:26, weight:800, color:'#f2eee5', gap:24}];
+  project.walls.forEach(wl=>{
+    (wl.colors||[wl.color]).forEach((c,ci)=>{
+      const tail=c.code||c.meta||'';
+      outLines.push({t:`${ci===0?wl.name+':  ':'        '}${c.name}${tail?'  ·  '+tail:''}`,
+        size:18, weight:500, color:'#e7e3d8', sw:c.hex, gap:16});
+    });
+  });
+  outLines.push({t:'Prepare na loja — (12) 3943-5659', size:18, weight:600, color:'#c2a36b', gap:20});
+  segs.push({dur:OUTRO, label:'encerramento', draw:(t)=>{
+    drawCard(g,W,H, outLines, {top:H*0.20});
+    drawWatermark(g,W,H);
+    const a = t<0.18 ? t/0.18 : 1;
+    g.save(); g.globalAlpha=1-Math.max(0,Math.min(1,a)); g.fillStyle='#000'; g.fillRect(0,0,W,H); g.restore();
+  }});
+
+  const totalMs = segs.reduce((s,x)=>s+x.dur,0)*1000;
+
+  rec.start();
+  const t0=performance.now();
+  let elapsed=0;
+  while(elapsed < totalMs){
+    elapsed = performance.now() - t0;
+    let acc=0, seg=segs[segs.length-1], local=1;
+    for(const s of segs){ const end=acc+s.dur*1000; if(elapsed<end){ seg=s; local=(elapsed-acc)/(s.dur*1000); break; } acc=end; }
+    g.globalAlpha=1; g.fillStyle='#000'; g.fillRect(0,0,W,H);
+    seg.draw(Math.max(0,Math.min(1,local)));
+    projBar.style.width=Math.min(100, elapsed/totalMs*100).toFixed(1)+'%';
+    projProgTxt.textContent=`Gravando ${seg.label}…`;
+    await new Promise(r=>setTimeout(r, 12));
+  }
+  segs[segs.length-1].draw(1);
+  await new Promise(r=>setTimeout(r, 150));
+
+  rec.stop(); await stopped;
+  const type=(mime||'video/webm').split(';')[0];
+  const blob=new Blob(chunks,{type});
+  const url=URL.createObjectURL(blob); project.videoUrl=url;
+  const ext = type.includes('mp4') ? 'mp4' : 'webm';
+  projVideo.src=url;
+  projDownload.href=url; projDownload.download=`simulacao-decorcolors.${ext}`;
+  projOutNote.textContent = ext==='mp4'
+    ? 'MP4 — abre em qualquer lugar (WhatsApp, Instagram, iPhone).'
+    : 'WEBM — abre bem no Chrome/Android. Pra WhatsApp/iPhone, converta pra MP4.';
+  projProgress.hidden=true; projOut.hidden=false;
+  state._rendering=false; updateProjButtons();
+}
+btnMakeVideo.addEventListener('click', renderVideo);
+
+updateProjButtons();
+setStatus('Ambiente de exemplo — escolha uma cor no leque para pré-visualizar. Envie sua foto pra pintar de verdade.', '');
+</script>
+</body>
+</html>
