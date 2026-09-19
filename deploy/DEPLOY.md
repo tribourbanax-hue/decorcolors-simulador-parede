@@ -1,5 +1,32 @@
 # Deploy — nova versão do Simulador (client-side, sem MobileSAM)
 
+> ## ⚠️ LEIA ANTES DE PUBLICAR QUALQUER COISA DAQUI (19/09/2026)
+>
+> **A fonte de verdade é o SERVIDOR, não este repositório.**
+>
+> O `deploy/index.html` que estava aqui até 19/09 foi preparado em **10/09** e
+> o site seguiu por outro caminho em **15/09**: a varinha foi refeita (cromância
+> normalizada pelo brilho — passou de 29% pra 80% de acerto na sombra), ganhou
+> arrasto ao vivo e "seguir sombras", e o **Toque inteligente (MediaPipe) foi
+> REMOVIDO de propósito**. Publicar o arquivo antigo por cima teria devolvido o
+> Toque e apagado a varinha nova.
+>
+> Em 19/09 o `deploy/index.html` foi **substituído pelo que está no ar**, com a
+> correção da seleção >92% já aplicada (md5 `81d11837…`). As instruções abaixo
+> valem; a seção "O que muda" descreve a virada de 11/09 e ficou como histórico.
+>
+> **Antes de publicar, sempre confira o que está no ar:**
+> ```
+> curl -s https://simulador.decorcolorssjc.com.br/ | md5sum
+> ssh -i ~/.ssh/decor_vps root@2.24.210.90 "md5sum /opt/decorcolors-simulador/static/index.html"
+> ```
+> Se der diferente do `deploy/index.html` daqui, **o servidor é quem está certo** —
+> baixe, aplique sua mudança em cima dele, e só então publique.
+>
+> Há teste: `node deploy/teste-varinha.mjs <arquivo.html>`. Ele lê a função do
+> próprio HTML, então roda contra o que você vai publicar E contra a página
+> baixada do ar.
+
 **Site alvo:** https://simulador.decorcolorssjc.com.br/ (VPS próprio, nginx + uvicorn)
 **Quando:** a partir de 11/09/2026 — substitui a versão atual.
 **Preparado em:** 10/09/2026, a partir do HTML que estava no ar (`_backup_prod_20260910.html`).

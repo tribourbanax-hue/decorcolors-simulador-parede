@@ -276,7 +276,7 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
 <header>
   <div class="eyebrow">Simulador de parede · Grátis, sem cadastro</div>
   <h1>Veja a cor na sua parede antes de comprar a tinta</h1>
-  <p>Envie a foto do ambiente, toque na parede que quer pintar e escolha qualquer uma das 1.001 cores do catálogo tintométrico. A área da parede é identificada no seu próprio navegador — a foto não sai do seu aparelho — e a cor entra na imagem preservando a sombra e a luz reais.</p>
+  <p>Envie a foto do ambiente, marque a parede que quer pintar e escolha qualquer uma das 1.001 cores do catálogo tintométrico. Você marca a parede com a varinha ou com o pincel, tudo dentro do seu próprio navegador — a foto não sai do seu aparelho — e a cor entra na imagem preservando a sombra e a luz reais.</p>
 </header>
 
 <div class="app">
@@ -288,7 +288,7 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
     </div>
 
     <div class="stage" id="stage">
-      <span class="sample-badge" id="sampleBadge">Ambiente de exemplo — sem IA, só pra navegar cores</span>
+      <span class="sample-badge" id="sampleBadge">Ambiente de exemplo — só pra navegar cores</span>
       <span class="wipe-tag" id="wipeTagBefore">Antes</span>
       <span class="wipe-tag" id="wipeTagAfter">Depois</span>
       <svg id="sampleSvg" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg">
@@ -332,13 +332,13 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
 
     <div class="toolbar is-hidden" id="toolbar">
       <div class="seg" id="toolSeg">
-        <button type="button" data-tool="smart" aria-pressed="true">✨ Toque inteligente</button>
-        <button type="button" data-tool="wand">🪄 Varinha</button>
+        <button type="button" data-tool="wand" aria-pressed="true">🪄 Varinha</button>
         <button type="button" data-tool="brush">🖌️ Pincel</button>
       </div>
       <label class="toggle"><input type="checkbox" id="chkRemove"> Desmarcar / apagar</label>
-      <span class="tool-opt" id="optWand" hidden>Semelhança
-        <input type="range" id="rngTol" min="6" max="90" value="32"><span class="val" id="valTol">32</span>
+      <span class="tool-opt" id="optWand">Semelhança
+        <input type="range" id="rngTol" min="5" max="110" value="40"><span class="val" id="valTol">40</span>
+        <label class="toggle" title="A mesma tinta fica bem mais escura na sombra. Ligue pra pegar a parede inteira de uma vez."><input type="checkbox" id="chkWandShadow" checked> seguir sombras</label>
         <label class="toggle"><input type="checkbox" id="chkWandGlobal"> a foto toda</label>
       </span>
       <span class="tool-opt" id="optBrush" hidden>Tamanho
@@ -468,7 +468,7 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
       <a href="tel:+551239435659">(12) 3943-5659</a> · <a href="https://decorcolorssjc.com.br/">decorcolorssjc.com.br</a>
     </div>
     <div style="text-align:right;">
-      A segmentação roda no seu navegador (MediaPipe, Google — open source).<br>Sua foto não é enviada a servidor nenhum.
+      A seleção roda inteira no seu navegador, sem internet.<br>Sua foto não é enviada a servidor nenhum.
     </div>
   </div>
 </footer>
@@ -487,9 +487,8 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
 
 <script>
 /* ============================================================================
-   PROTÓTIPO v6 — segmentação 100% no navegador (sem servidor Python).
-   - Toque inteligente: MediaPipe Interactive Image Segmenter (magic_touch.tflite).
-   - Varinha mágica: flood fill por semelhança de cor (canvas puro, offline).
+   v7 — seleção 100% no navegador, sem IA e sem servidor Python.
+   - Varinha: seleção por semelhança de cor em YCbCr (canvas puro, offline).
    - Pincel: adicionar / apagar à mão (canvas puro, offline).
    - Várias áreas na mesma foto: parede A cor X, parede B cor Y...
    - Recolor: relighting em luz linear (preserva sombra/textura).
@@ -497,11 +496,6 @@ src="https://www.facebook.com/tr?id=1033624198703952&ev=PageView&noscript=1"/></
    >>> COLLECTIONS abaixo está com exemplos gerados do catálogo. Trocar pela
        lista oficial da Decor Colors (nome da coleção -> lista de códigos).
    ========================================================================== */
-
-const MP_VER = '1.0.1';
-const MP_ESM = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/vision_bundle.mjs`;
-const MP_WASM = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}/wasm`;
-const MP_MODEL = '/static/models/magic_touch.tflite';
 
 const HUE_BUCKETS = ['Todas','Amarelos','Laranjas','Vermelhos e Rosas','Roxos','Azuis','Verdes','Beges e Marrons','Branco e Cinzas'];
 const BUCKET_SAMPLE = {
@@ -557,8 +551,8 @@ const state = {
   hue:'Todas', collection:null, query:'',
   mode:'sample',                // 'sample' | 'photo'
   baseCanvas:null, baseData:null, w:0, h:0,
-  tool:'smart', eraseMode:false,
-  wandTolerance:32, wandGlobal:false, brushSize:30,
+  tool:'wand', eraseMode:false,
+  wandTolerance:40, wandGlobal:false, wandShadow:true, brushSize:30,
   areas:[], activeArea:0,
   sampleColor:null,
   strength:1.0, texture:0.70, feather:1, finish:'fosco',
@@ -619,28 +613,6 @@ fetch('/static/palette.json').then(r=>r.json()).then(data=>{
   }
   buildCollectionRow(); buildHueRow(); buildSlots(); renderGrid();
 });
-
-/* ---------- MediaPipe (lazy) ---------- */
-let _seg=null, _segPromise=null;
-function getSegmenter(){
-  if(_seg) return Promise.resolve(_seg);
-  if(_segPromise) return _segPromise;
-  _segPromise = (async ()=>{
-    const V = await import(MP_ESM);
-    const fileset = await V.FilesetResolver.forVisionTasks(MP_WASM);
-    // tasks-vision 1.0.x: a classe "Legacy" é a que roda os modelos .tflite
-    // clássicos (magic_touch). A InteractiveSegmenter nova exige um bundle .task
-    // que o Google ainda não publicou pro magic_touch.
-    const Cls = V.InteractiveSegmenterLegacy || V.InteractiveSegmenter;
-    _seg = await Cls.createFromOptions(fileset, {
-      baseOptions:{ modelAssetPath: MP_MODEL },
-      outputCategoryMask:true, outputConfidenceMasks:false,
-    });
-    return _seg;
-  })();
-  _segPromise.catch(()=>{ _segPromise=null; });
-  return _segPromise;
-}
 
 /* ---------- Coleções ---------- */
 function buildCollectionRow(){
@@ -792,8 +764,8 @@ function featheredAlpha(a, feather){
 
 function mergeIntoActive(m){
   const a=activeArea().mask;
-  if(state.eraseMode){ for(let i=0;i<a.length;i++) if(m[i]) a[i]=0; }
-  else { for(let i=0;i<a.length;i++) if(m[i]) a[i]=255; }
+  if(state.eraseMode){ for(let i=0;i<a.length;i++) if(m[i]) a[i]=Math.max(0, a[i]-m[i]); }
+  else { for(let i=0;i<a.length;i++) if(m[i]>a[i]) a[i]=m[i]; }
 }
 
 function renderAreaRow(){
@@ -944,12 +916,12 @@ canvas.addEventListener('pointermove', moveBrushRing);
 canvas.addEventListener('pointerenter', moveBrushRing);
 canvas.addEventListener('pointerleave', hideBrushRing);
 const TOOL_HINT = {
-  smart:'Toque inteligente — toque no meio da parede; a IA acha o contorno.',
-  wand:'Varinha — toque numa cor; seleciona tudo que for parecido. Ajuste a “Semelhança”.',
+  wand:'Varinha — toque na parede e, SEM SOLTAR, arraste pra direita pra abrir a seleção (ou pra esquerda pra fechar).',
   brush:'Pincel — arraste sobre a foto pra pintar a seleção à mão. Marque “Desmarcar / apagar” pra tirar.',
 };
 $('#chkRemove').addEventListener('change', e=>{ state.eraseMode=e.target.checked; });
 $('#rngTol').addEventListener('input', e=>{ state.wandTolerance=+e.target.value; $('#valTol').textContent=e.target.value; });
+$('#chkWandShadow').addEventListener('change', e=>{ state.wandShadow=e.target.checked; });
 $('#chkWandGlobal').addEventListener('change', e=>{ state.wandGlobal=e.target.checked; });
 $('#rngBrush').addEventListener('input', e=>{ state.brushSize=+e.target.value; $('#valBrush').textContent=e.target.value;
   if(brushRing.classList.contains('on')){ const d=brushRingPx(); brushRing.style.width=d+'px'; brushRing.style.height=d+'px'; } });
@@ -1003,12 +975,14 @@ function useImage(img){
   dropzoneTitle.textContent='Trocar foto'; dropzoneSub.textContent='ou arraste outro arquivo aqui';
   syncColorUi(); renderAreaRow(); renderGrid(); renderComposite();
   setStatus('Foto carregada — '+TOOL_HINT[state.tool], 'ok');
-  if(state.tool==='smart') getSegmenter().catch(()=>{});   // aquece o modelo
+  buildWandLut();                     // deixa a varinha pronta pro 1º toque
   updateProjButtons();
 }
 
 /* ---------- seleção: pointer na cena ---------- */
 let painting=false, lastPt=null, renderQueued=false;
+/* arrasto da varinha: guarda a máscara de antes pra recalcular ao vivo */
+let wandDrag=null;
 function scheduleRender(){ if(renderQueued) return; renderQueued=true; requestAnimationFrame(()=>{ renderQueued=false; renderComposite(); }); }
 
 function canvasPt(e){
@@ -1022,115 +996,273 @@ canvas.addEventListener('pointerdown', onDown);
 canvas.addEventListener('pointermove', onMove);
 window.addEventListener('pointerup', onUp);
 
-async function onDown(e){
+function onDown(e){
   if(state.mode!=='photo') return;
   const p=canvasPt(e);
   if(state.tool==='brush'){
     painting=true; try{ canvas.setPointerCapture(e.pointerId); }catch(_){}
     pushUndo(activeArea()); stampBrush(p.xi,p.yi); lastPt=p; touch(activeArea()); scheduleRender();
-  } else if(state.tool==='wand'){
+  } else {                                 // varinha
     pushUndo(activeArea());
-    setStatus('Selecionando por cor…', 'busy');
-    setTimeout(()=>{                       // deixa o status pintar antes do trabalho síncrono
-      const m=wandAt(p.xi,p.yi, state.wandTolerance, state.wandGlobal);
-      applyCandidate(m);
-    }, 0);
-  } else {                                 // smart (MediaPipe)
-    pushUndo(activeArea());
-    spin(true); setStatus('Identificando a área da parede…', 'busy');
-    try{
-      const m=await smartClickAt(p.x/state.w, p.y/state.h, p.xi, p.yi);
-      applyCandidate(m);
-    }catch(err){
-      console.error(err);
-      setStatus('Não consegui carregar a IA de seleção. Use a 🪄 Varinha ou o 🖌️ Pincel (funcionam sem internet).', 'err');
-    }finally{ spin(false); }
+    try{ canvas.setPointerCapture(e.pointerId); }catch(_){}
+    wandDrag = {
+      pt:p, x0:e.clientX, tol0:state.wandTolerance,
+      before:activeArea().mask.slice(),     // base fixa: cada recálculo parte daqui
+      last:-1, pending:false,
+    };
+    runWandDrag(state.wandTolerance, true);
   }
 }
+
+/* Recalcula a varinha a partir da máscara que existia antes do toque, pra o
+   arrasto abrir e fechar a seleção sem empilhar seleção em cima de seleção. */
+function runWandDrag(tol, quick){
+  if(!wandDrag) return;
+  if(quick && tol===wandDrag.last) return;
+  wandDrag.last=tol;
+  const a=activeArea();
+  a.mask.set(wandDrag.before);
+  const m=wandAt(wandDrag.pt.xi, wandDrag.pt.yi, tol, state.wandGlobal, state.wandShadow, quick);
+  wandDrag.mask=m;
+  mergeIntoActive(m); touch(a);
+  invalidatePaint(); renderComposite();
+}
+
 function onMove(e){
+  if(wandDrag){
+    // arrastar na horizontal abre (direita) ou fecha (esquerda) a seleção
+    const r=canvas.getBoundingClientRect();
+    const dx=(e.clientX-wandDrag.x0)*(state.w/r.width);
+    const tol=Math.max(5, Math.min(110, Math.round(wandDrag.tol0 + dx/6)));
+    if(tol!==state.wandTolerance){
+      state.wandTolerance=tol;
+      $('#rngTol').value=tol; $('#valTol').textContent=tol;
+      setStatus('Semelhança '+tol+' — solte quando a parede estiver toda marcada.', 'busy');
+    }
+    if(!wandDrag.pending){                  // 1 recálculo por quadro, no máximo
+      wandDrag.pending=true;
+      requestAnimationFrame(()=>{ if(wandDrag){ wandDrag.pending=false; runWandDrag(state.wandTolerance, true); } });
+    }
+    return;
+  }
   if(!painting || state.tool!=='brush') return;
   const p=canvasPt(e);
   if(lastPt) strokeBrush(lastPt, p);
   lastPt=p; touch(activeArea()); scheduleRender();
 }
+
 function onUp(){
+  if(wandDrag){
+    runWandDrag(state.wandTolerance, false);   // ao soltar, refaz com acabamento
+    const m=wandDrag.mask, antesDoToque=wandDrag.before; wandDrag=null;
+    // ⚠️ SELEÇÃO GRANDE DEMAIS É DESFEITA, NÃO SÓ AVISADA (19/09/2026).
+    //
+    // Antes, o aviso "pegou quase a foto toda" aparecia com a foto JÁ pintada
+    // errada: `afterSelect` mesclava e renderizava primeiro e conferia o
+    // tamanho depois. Quem via a tela tinha que desfazer na mão pra continuar.
+    //
+    // A conferência não pode subir pro `runWandDrag`: lá ela mataria o arrasto
+    // ao vivo, que é justamente o que deixa a pessoa ABRIR a seleção demais e
+    // fechar de volta sem soltar o dedo. O lugar certo é aqui, ao soltar — o
+    // único instante em que a seleção vira definitiva.
+    if(!state.eraseMode && m && descartaSelecaoGrande(m, antesDoToque)) return;
+    updateProjButtons(); afterSelect(m);
+    return;
+  }
   if(!painting) return;
   painting=false; lastPt=null;
   invalidatePaint(); renderComposite(); updateProjButtons();
-  afterSelect();
+  afterSelect(null);
 }
 
-/* Confere o tamanho da seleção ANTES de aplicar — evita pintar a foto toda
-   e só depois avisar. Se passar do limite, descarta a seleção sem mexer na máscara. */
-function applyCandidate(m){
+/* Desfaz a seleção que pegou quase a foto inteira e devolve `true` pra quem
+   chamou parar por ali. Restaura a máscara que existia ANTES do toque — a
+   mesma base fixa que o arrasto usa — e joga fora o undo empilhado no
+   pointerdown, que apontaria pro mesmo estado e gastaria um passo do histórico
+   sem desfazer nada. */
+function descartaSelecaoGrande(m, antesDoToque){
+  const frac = m.reduce((s,v)=>s+(v?1:0),0) / m.length;
+  if(frac <= 0.92) return false;
   const a=activeArea();
-  if(!state.eraseMode){
-    const frac = m.reduce((s,v)=>s+(v?1:0),0) / m.length;
-    if(frac>0.92){
-      if(a._undo.length) a._undo.pop();  // nada mudou, descarta o undo que não vai servir
-      setStatus('Essa seleção pegou quase a foto toda. Toque num ponto mais dentro da parede, ou baixe a “Semelhança”.', 'err');
+  a.mask.set(antesDoToque);
+  if(a._undo.length) a._undo.pop();
+  touch(a); invalidatePaint(); renderComposite(); updateProjButtons();
+  setStatus('Essa seleção pegou quase a foto toda, então eu desfiz. Arraste pra esquerda pra fechar a “Semelhança”, ou toque num ponto mais dentro da parede.', 'err');
+  return true;
+}
+
+function afterSelect(candidate){
+  invalidatePaint(); renderComposite(); updateProjButtons();
+  const a=activeArea();
+  if(candidate){
+    const frac = candidate.reduce((s,v)=>s+(v?1:0),0) / candidate.length;
+    // O caso ">92%" não chega mais aqui: `onUp` desfaz e para antes (ver
+    // `descartaSelecaoGrande`). Deixar a conferência repetida aqui embaixo
+    // seria código que nunca roda — e código morto de aviso é o que faz a
+    // próxima pessoa achar que o problema está tratado quando não está.
+    if(!state.eraseMode && frac<0.004){
+      setStatus('Pegou pouca coisa. Arraste pra direita segurando o toque pra abrir a seleção, ou ligue “seguir sombras”.', 'err');
       return;
     }
   }
-  mergeIntoActive(m); touch(a);
-  afterSelect();
-}
-
-function afterSelect(){
-  invalidatePaint(); renderComposite(); updateProjButtons();
-  const a=activeArea();
   setStatus(a.color
     ? `${a.name} pintada. Ajuste com a Varinha/Pincel, ou crie uma “Nova área” pra outra parede.`
     : 'Área selecionada — escolha a cor no leque. Pra tirar um pedaço, marque “Desmarcar / apagar”.', 'ok');
 }
 
-/* MediaPipe: 1 keypoint -> objeto tocado.
-   O magic_touch marca o objeto selecionado com 255. Fazemos uma votação num
-   raio de 2 px em volta do toque pra não errar por desalinhamento de 1 pixel. */
-async function smartClickAt(nx,ny,xi,yi){
-  const seg=await getSegmenter();
-  const res=seg.segment(state.baseCanvas, { keypoint:{ x:nx, y:ny } });
-  const w=state.w, h=state.h;
-  const u8=res.categoryMask.getAsUint8Array();
-  let hi=0, lo=0;
-  for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){
-    const x=xi+dx, y=yi+dy; if(x<0||y<0||x>=w||y>=h) continue;
-    u8[y*w+x] ? hi++ : lo++;
+/* ============================ VARINHA ======================================
+   Seleção por semelhança de cor feita pra PAREDE, que é um caso especial:
+   a mesma tinta fica muito mais escura na sombra e muito mais clara perto da
+   janela, mas o MATIZ quase não muda. Comparar RGB cru (o que a versão antiga
+   fazia) confunde "outra cor" com "mesma cor na sombra" e a seleção morre na
+   primeira mudança de luz.
+
+   Aqui a foto é convertida uma vez só pra um espaço em que sombra quase não
+   mexe na cor: a cromância é dividida pelo brilho do próprio pixel (por isso
+   o mesmo bege continua o mesmo bege com metade da luz) e o brilho vira
+   escala de RAZÃO (log), em que "duas vezes mais escuro" dá sempre a mesma
+   distância, no claro ou no escuro. A distância soma cor + brilho, e o peso do
+   brilho cai com "seguir sombras" ligado. Além disso:
+     • a semente é a média de um quadrado 5x5 (não erra por 1 pixel de ruído);
+     • o preenchimento é por LINHA (scanline), rápido o bastante pra recalcular
+       a cada quadro enquanto o dedo arrasta;
+     • a borda sai com meio-tom (anti-serrilhado) em vez de escadinha;
+     • uma limpeza final tapa os furinhos da textura e tira os pontos soltos.
+   ========================================================================== */
+
+/* Mapas da foto inteira, calculados 1x por foto:
+     A, B = cromância normalizada pelo brilho -> não muda na sombra;
+     L    = brilho em log -> "metade da luz" dá a mesma distância em todo lugar.
+   O +24 no divisor segura o estouro de ruído nas partes bem escuras da foto. */
+function buildWandLut(){
+  const w=state.w, h=state.h, n=w*h, src=state.baseData;
+  const A=new Float32Array(n), B=new Float32Array(n), L=new Float32Array(n);
+  for(let p=0,o=0;p<n;p++,o+=4){
+    const r=src[o], g=src[o+1], b=src[o+2];
+    const y=0.299*r+0.587*g+0.114*b;
+    const k=255/(y+24);
+    A[p]=(b-y)*k; B[p]=(r-y)*k; L[p]=64*Math.log(y+8);
   }
-  const fg = hi>=lo ? 255 : 0;             // classe dominante no ponto tocado
-  const m=new Uint8ClampedArray(w*h);
-  for(let i=0;i<m.length;i++) m[i]=((u8[i]?255:0)===fg)?255:0;
-  res.categoryMask && res.categoryMask.close();
-  (res.confidenceMasks||[]).forEach(x=>x.close && x.close());
-  res.close && res.close();
-  return m;
+  state.wandA=A; state.wandB=B; state.wandL=L; state.wandLutW=w; state.wandLutH=h;
+  state._wandBuf=null;                       // buffers de trabalho remontam junto
 }
 
-/* Varinha: flood fill por semelhança de cor. global=true -> a foto toda. */
-function wandAt(px,py,tol,global){
-  const w=state.w, h=state.h, src=state.baseData;
-  const o0=(py*w+px)*4, r0=src[o0], g0=src[o0+1], b0=src[o0+2];
-  const t2=tol*tol*3;
-  const m=new Uint8ClampedArray(w*h);
-  if(global){
-    for(let p=0;p<w*h;p++){ const o=p*4; const dr=src[o]-r0,dg=src[o+1]-g0,db=src[o+2]-b0;
-      if(dr*dr+dg*dg+db*db<=t2) m[p]=255; }
-    return m;
+/* Buffers reaproveitados: durante o arrasto a varinha roda a cada quadro e
+   alocar 4 MB por quadro faria o coletor de lixo engasgar. */
+function wandBuffers(n, reset){
+  let b=state._wandBuf;
+  if(!b || b.n!==n){
+    b={ n, seen:new Uint8Array(n), m:new Uint8ClampedArray(n), t1:new Uint8ClampedArray(n), t2:new Uint8ClampedArray(n) };
+    state._wandBuf=b;
+  } else if(reset){ b.seen.fill(0); b.m.fill(0); }
+  return b;
+}
+
+function wandAt(px,py,tol,global,followShadow,quick){
+  const w=state.w, h=state.h, n=w*h;
+  if(!state.wandA || state.wandLutW!==w || state.wandLutH!==h) buildWandLut();
+  const A=state.wandA, B=state.wandB, L=state.wandL;
+
+  /* semente: média 5x5 em volta do toque */
+  let a0=0, b0=0, l0=0, cnt=0;
+  for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++){
+    const x=px+dx, y=py+dy; if(x<0||y<0||x>=w||y>=h) continue;
+    const p=y*w+x; a0+=A[p]; b0+=B[p]; l0+=L[p]; cnt++;
   }
-  const stack=[py*w+px];
+  a0/=cnt; b0/=cnt; l0/=cnt;
+
+  /* peso do brilho: baixo = aceita a mesma cor bem mais clara/escura */
+  const wL = followShadow ? 0.25 : 1.0;
+  const d2 = p => { const u=A[p]-a0, v=B[p]-b0, t=L[p]-l0; return u*u + v*v + wL*t*t; };
+
+  const T  = tol*tol;          // dentro: entra inteiro e espalha
+  const TS = T*2.2;            // banda macia: entra em meio-tom, mas não espalha
+  const softOf = v => v<=T ? 255 : (v>=TS ? 0 : 255 - ((v-T)*255/(TS-T))|0);
+
+  const buf=wandBuffers(n, true), m=buf.m;
+
+  if(global){
+    for(let p=0;p<n;p++){ const s=softOf(d2(p)); if(s) m[p]=s; }
+    return quick ? m : cleanMask(m,w,h,0,0,w-1,h-1);
+  }
+
+  const seed=py*w+px;
+  if(d2(seed)>T){                        // semente média caiu fora: usa o pixel puro
+    a0=A[seed]; b0=B[seed]; l0=L[seed];
+  }
+
+  /* --- flood fill por linha --- */
+  const seen=buf.seen;
+  const stack=[seed];
+  const inside = p => !seen[p] && d2(p)<=T;
+  let bx0=px, bx1=px, by0=py, by1=py;      // caixa do que entrou
   while(stack.length){
     const p=stack.pop();
-    if(m[p]) continue;
-    const o=p*4; const dr=src[o]-r0,dg=src[o+1]-g0,db=src[o+2]-b0;
-    if(dr*dr+dg*dg+db*db>t2) continue;
-    m[p]=255;
-    const x=p%w, y=(p/w)|0;
-    if(x>0) stack.push(p-1);
-    if(x<w-1) stack.push(p+1);
-    if(y>0) stack.push(p-w);
-    if(y<h-1) stack.push(p+w);
+    if(seen[p]) continue;
+    const y=(p/w)|0, rowStart=y*w, rowEnd=rowStart+w-1;
+    let l=p, r=p;
+    while(l>rowStart && inside(l-1)) l--;
+    while(r<rowEnd   && inside(r+1)) r++;
+    for(let q=l;q<=r;q++){ seen[q]=1; m[q]=255; }
+    if(l-rowStart<bx0) bx0=l-rowStart;
+    if(r-rowStart>bx1) bx1=r-rowStart;
+    if(y<by0) by0=y; if(y>by1) by1=y;
+    if(y>0)   pushRun(l-w, r-w);
+    if(y<h-1) pushRun(l+w, r+w);
   }
-  return m;
+  function pushRun(a,b){                 // empilha só o início de cada trecho
+    let q=a;
+    while(q<=b){
+      if(inside(q)){ stack.push(q); while(q<=b && inside(q)) q++; }
+      else q++;
+    }
+  }
+
+  /* Daí pra frente só a caixa do que foi selecionado importa — é o que deixa
+     o recálculo leve o bastante pra rodar a cada quadro durante o arrasto. */
+  bx0=Math.max(0,bx0-3); by0=Math.max(0,by0-3);
+  bx1=Math.min(w-1,bx1+3); by1=Math.min(h-1,by1+3);
+
+  /* --- borda em meio-tom: 2 anéis em volta do que entrou --- */
+  for(let ring=0, rings=quick?1:2; ring<rings; ring++){
+    const edge=[];
+    for(let y=by0;y<=by1;y++){
+      const row=y*w;
+      for(let x=bx0;x<=bx1;x++){
+        const p=row+x; if(m[p]) continue;
+        const near = (x>0 && m[p-1]) || (x<w-1 && m[p+1]) || (y>0 && m[p-w]) || (y<h-1 && m[p+w]);
+        if(!near) continue;
+        const v=softOf(d2(p)); if(v) edge.push(p, v);
+      }
+    }
+    for(let i=0;i<edge.length;i+=2) m[edge[i]]=edge[i+1];
+    if(!edge.length) break;
+  }
+
+  return quick ? m : cleanMask(m,w,h,bx0,by0,bx1,by1);
+}
+
+/* Tapa furinho de textura e tira pontinho solto, sem comer tomada nem quadro:
+   só mexe em pixel cercado por 3+ vizinhos (furo) ou por nenhum (sujeira). */
+function cleanMask(m,w,h,bx0,by0,bx1,by1){
+  const y0=Math.max(1,by0), y1=Math.min(h-2,by1), x0=Math.max(1,bx0), x1=Math.min(w-2,bx1);
+  const buf=wandBuffers(w*h, false), tmp=[buf.t1, buf.t2];
+  let cur=m;
+  for(let pass=0; pass<2; pass++){
+    const out=tmp[pass]; out.set(cur);
+    for(let y=y0;y<=y1;y++){
+      const row=y*w;
+      for(let x=x0;x<=x1;x++){
+        const p=row+x;
+        const u=cur[p-w], d=cur[p+w], l=cur[p-1], r=cur[p+1];
+        const k=(u?1:0)+(d?1:0)+(l?1:0)+(r?1:0);
+        if(!cur[p]){ if(k>=3) out[p]=255; }
+        else if(k===0) out[p]=0;
+      }
+    }
+    cur=out;
+  }
+  return cur;
 }
 
 /* Pincel */
